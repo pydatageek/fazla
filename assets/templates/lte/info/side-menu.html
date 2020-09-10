@@ -1,0 +1,46 @@
+{% load static i18n %}
+
+<!-- small card -->
+<div class="callout callout-info">
+  <div class="inner">
+    <ul>
+      <li>
+        <a href="{% url 'country-area-list' %}">
+          Country areas
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'country-code-list' %}">
+          Country codes (ISO, UN, FIPS)
+        </a>
+      </li> 
+      <li>
+        <a href="{% url 'phone-code-list' %}">
+          International phone codes
+        </a>
+      </li>   
+      <li>
+        <a href="{% url 'country-tld-list' %}">
+          Top level domains (TLDs)
+        </a>
+      </li>    
+      <li>
+        <a href="{% url 'driving-side-list' %}">
+          Country driving sides
+        </a>
+      </li>    
+      <li>
+        <a href="{% url 'world-population-detail' %}">
+          World population
+        </a>
+        <ul>
+          <li>
+            <a href="{% url 'world-population-detail' %}#countries">
+              Country populations
+            </a>
+          </li>
+        </ul>
+      </li>       
+    </ul>
+  </div>
+</div>

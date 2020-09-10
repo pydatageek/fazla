@@ -1,0 +1,19 @@
+.info-box .info-box-content {
+  flex-wrap: wrap;
+}
+.info-box .info-box-content a{
+  color: white;
+}
+.info-box .info-box-content a:hover{
+  color: #253042;
+}
+
+.info-box .info-box-icon a{
+  color: white;
+}
+.info-box .info-box-icon a:hover{
+  color: #253042;
+}
+.callout a:hover {
+  color: #253042;
+}

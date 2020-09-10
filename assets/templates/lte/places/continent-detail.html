@@ -1,0 +1,224 @@
+{% extends 'lte/places/base.html' %}
+{% load static i18n humanize imagekit %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center">
+  <div class="col-10">
+
+    <div class="alert alert-info alert-dismissible">
+      <h5>
+        <i class="icon fas fa-info"></i> 
+        {% if object.is_independent %}
+          {{ object.name }} is an independent country.
+        {% else %}
+          {{ object.name }} is not an independent country.
+        {% endif %}
+      </h5>
+      {% if not object.is_independent %}
+        {{ object.name }} has dependency to 
+        <a href="{% url 'country-detail' object.parent.slug %}">
+          {{ object.parent }}</a>.
+      {% endif %}
+    </div>
+
+    <div class="container row">
+
+      <div class="col-md-6">
+
+        <div class="col-md-12">
+          <div class="info-box bg-success">
+            <span class="info-box-icon"><i class="fas fa-code"></i></span>
+        
+            <div class="info-box-content">
+              <span class="info-box-text">ISO 3166-2</span>
+              <span class="info-box-number">{{ object.iso2 }}</span>
+        
+              <div class="progress">
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
+              <span class="progress-description">
+                ISO 3166-3: <strong>{{ object.iso3 }}</strong> <br>
+                UN code: <strong>{{ object.iso_numeric }}</strong> <br>
+                FIPS code: <strong>{{ object.fips }}</strong> 
+              </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+
+        <div class="col-12">
+          <div class="info-box bg-info">
+            <span class="info-box-icon"><i class="fas fa-network-wired"></i></span>
+        
+            <div class="info-box-content">
+              <span class="info-box-text">Top level domain (tld)</span>
+              <span class="info-box-number">
+                .{{ object.tld }}</span>
+        
+              <div class="progress">
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
+              <span class="progress-description">
+                This TLD is country specific 
+                <br>
+              </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+
+        <div class="col-12">
+          <div class="info-box bg-success">
+            <span class="info-box-icon"><i class="fas fa-phone-alt"></i></span>
+        
+            <div class="info-box-content">
+              <span class="info-box-text">International phone code</span>
+              <span class="info-box-number">{{ object.phone_code }}</span>
+        
+              <div class="progress">
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
+              <span class="progress-description">
+                e164: <strong>{{ object.e164 }}</strong> 
+              </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+
+        <div class="col-12">
+          <div class="info-box bg-warning">
+            <span class="info-box-icon"><i class="far fa-map"></i></span>
+        
+            <div class="info-box-content">
+              <span class="info-box-text">Surface area</span>
+              <span class="info-box-number">
+                {% if object.area < 50 %}
+                  {{ object.area|floatformat:2|intcomma }}
+                {% else %}
+                  {{ object.area|floatformat:0|intcomma }}
+                {% endif %}
+                km2
+              </span>
+        
+              <div class="progress">
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
+              <span class="progress-description">
+                <br>
+              </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+
+        <div class="col-12">
+          <div class="info-box bg-info">
+            <span class="info-box-icon"><i class="fas fa-car"></i></span>
+        
+            <div class="info-box-content">
+              <span class="info-box-text">Driving side</span>
+              <span class="info-box-number">
+                {{ object.get_driving_side_display }}</span>
+        
+              <div class="progress">
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
+              <span class="progress-description">
+                <br>
+              </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        
+    </div>
+
+      <div class="col-md-6">
+
+        <a href="{% url 'world-population-detail' %}" 
+          title="{{ title }} population">
+          <div class="col-12">
+            <!-- small card -->
+            <div class="small-box bg-warning">
+              <div class="inner">
+                <h3>
+                  {{ population.total|intcomma }}
+                </h3>
+
+                <p>Population</p>
+              </div>
+              <div class="icon">
+                <i class="fas fa-users"></i>
+              </div>
+              <span class="small-box-footer">
+                ({{ population.source.code }}, {{ population.year }})
+              </span>
+            </div>
+          </div>
+        </a>
+
+        <a href="{% url 'world-population-detail' %}" 
+          title="{{ title }} population">
+          <div class="col-12">
+            <!-- small card -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3>{{ population.male|intcomma }}</h3>
+
+                <p>Male Population</p>
+              </div>
+              <div class="icon">
+                <i class="fas fa-male"></i>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <a href="{% url 'world-population-detail' object.slug %}" 
+          title="{{ object.name }} population">
+          <div class="col-12">
+            <!-- small card -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h3>{{ population.female|intcomma }}</h3>
+
+                <p>Female Population</p>
+              </div>
+              <div class="icon">
+                <i class="fas fa-female"></i>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <a href="{% url 'country-population-detail' object.slug %}" 
+          title="{{ object.name }} population">
+          <div class="col-12">
+            <!-- small card -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>{{ population.median_age|floatformat:1 }}</h3>
+
+                <p>Median age</p>
+              </div>
+              <div class="icon">
+                <i class="fas fa-child"></i>
+              </div>
+            </div>
+          </div>
+        </a>
+          
+      </div>
+      {% endif %}  
+
+    </div>
+
+  </div>
+</div>
+{% endblock content %}

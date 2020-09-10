@@ -1,0 +1,14 @@
+{% extends 'lte/info/base.html' %}
+{% load static i18n humanize imagekit %}
+
+{% block content %}
+<div class="card box">
+  <div class="card-body">
+    {% for item in object_list %}
+      <p>
+        {{ item.name }}
+      </p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

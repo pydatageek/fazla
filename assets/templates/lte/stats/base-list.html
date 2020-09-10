@@ -1,0 +1,194 @@
+{% extends 'lte/stats/base.html' %}
+{% load static i18n humanize %}
+
+{% block extra_plugin_style %}
+<!-- DataTables -->
+<link rel="stylesheet" 
+  href="{% static 'lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+<link rel="stylesheet" 
+  href="{% static 'lte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+<link rel="stylesheet" 
+  href="{% static 'lte/plugins/datatables-fixedheader/css/fixedHeader.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="{% static 'lte/plugins/morris/morris.css' %}">  
+{% endblock %}
+
+{% block content %}{% endblock %}
+
+{% block extra_plugin_script %}
+<!-- DataTables -->
+<script 
+  src="{% static 'lte/plugins/datatables/jquery.dataTables.min.js' %}">
+</script>
+<script 
+  src="{% static 'lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}">
+</script>
+<script 
+  src="{% static 'lte/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}">
+</script>
+<script 
+  src="{% static 'lte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}">
+</script>
+<script 
+  src="{% static 'lte/plugins/datatables-fixedheader/js/dataTables.fixedHeader.min.js' %}">
+</script>
+<script 
+  src="{% static 'lte/plugins/datatables-fixedheader/js/fixedHeader.bootstrap4.min.js' %}">
+</script>
+
+<script src="{% static 'lte/plugins/chart.js/Chart.bundle.min.js' %}"></script>
+<script src="{% static 'lte/plugins/chart.js/utils.js' %}"></script>
+{% endblock %}
+
+{% block extra_script %}
+
+<script>
+  $(function () {
+    var t = $('#list').DataTable({
+      "columnDefs": [{
+        "searchable": false,
+        "orderable": false,
+        "targets": 0
+      }],
+      "paging": true,
+      "pageLength": 10,
+      "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "order": [[1, 'desc']],
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+      "fixedHeader": true,
+    });
+
+    t.on( 'order.dt search.dt', function () {
+        t.column(0, {search:'applied', order:'applied'}).nodes().each(function (cell, i) {
+            cell.innerHTML = i+1;
+        });
+    }).draw();
+  });
+  $(function () {
+    var t = $('#list2').DataTable({
+      "columnDefs": [{
+        "searchable": false,
+        "orderable": false,
+        "targets": 0
+      }],
+      "paging": true,
+      "pageLength": -1,
+      "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "order": [[2, 'desc']],
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+      "fixedHeader": true,
+    });
+
+    t.on( 'order.dt search.dt', function () {
+        t.column(0, {search:'applied', order:'applied'}).nodes().each(function (cell, i) {
+            cell.innerHTML = i+1;
+        });
+    }).draw();
+  });  
+</script>
+
+<script>
+  var ctx = document.getElementById('yp').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: [
+      {% for item in object_list %}
+        {{ item.year }}
+        {% if not forloop.last %},{% endif %}
+      {% endfor %}  
+      ],
+      datasets: [
+        {
+          label: 'total population',
+          data: [
+          {% for item in object_list %}
+            {{ item.total }}
+            {% if not forloop.last %},{% endif %}
+          {% endfor %} 
+          ],
+  
+          backgroundColor: window.chartColors.orange,
+          borderColor: window.chartColors.orange,
+          borderWidth: 1,
+          fill: false,
+        },
+        {
+          label: 'female',
+          data: [
+          {% for item in object_list %}
+            {{ item.female }}
+            {% if not forloop.last %},{% endif %}
+          {% endfor %} 
+          ],
+  
+          backgroundColor: window.chartColors.red,
+          borderColor: window.chartColors.red,
+          borderWidth: 1,
+          fill: false,
+        },
+        {
+          label: 'male',
+          data: [
+          {% for item in object_list %}
+            {{ item.male }}
+            {% if not forloop.last %},{% endif %}
+          {% endfor %} 
+          ],
+  
+          backgroundColor: window.chartColors.blue,
+          borderColor: window.chartColors.blue,
+          borderWidth: 1,
+          fill: false,
+        },
+      ],  
+      options: {
+        responsive: true,
+        scales: {
+          xAxes: [{
+            gridLines: {
+              display: false,
+              drawBorder: true,
+              drawOnChartArea: false,
+              drawTicks: false,
+            },
+          }],
+          yAxes: [{
+            gridLines: {
+              display: false,
+              drawBorder: true,
+              drawOnChartArea: false,
+              drawTicks: false,
+            },
+            ticks: {
+              stepSize: 10,
+              beginAtZero: false,
+              callback: function (value) {
+                return numeral(value).format('$ 0,0')
+              }
+            }
+          }]
+        },
+        layout: {
+          padding: {
+            left: 50,
+            right: 0,
+            top: 0,
+            bottom: 0
+          }
+        },
+      }
+    },
+  });
+</script>
+
+{% endblock %}

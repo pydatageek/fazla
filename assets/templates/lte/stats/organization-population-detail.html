@@ -1,0 +1,62 @@
+{% extends 'lte/stats/base-list.html' %}
+{% load static i18n humanize imagekit %}
+
+{% block content %}
+<h2>Yearly Population of {{ title }}</h2>
+<div style="width:75%;">
+  <canvas id="yp" height="220" width="440" style="display: block; width: 440px; height: 220px;"></canvas>
+</div>
+
+<div class="card-body">
+  <p>{{ description }}</p>
+  <table id="list" class="table table-hover dataTable display">
+    <caption>{{ title }} Yearly Population: Female, Male, Density, Fertility Rate, Median Age</caption>
+    <thead>
+      <tr>
+        <th></th>
+        <th class="text-right">{% trans 'Year' %}</th>
+        <th class="text-right">{% trans 'Total' %}</th>
+        <th class="text-right">{% trans 'Female' %}</th>
+        <th class="text-right">{% trans 'Male' %}</th>
+        <th class="text-right">{% trans 'Change %' %}</th>
+        <th class="text-right">{% trans 'Change' %}</th>
+        <th class="text-right">{% trans 'Fertility %' %}</th>
+        <th class="text-right">{% trans 'Median Age' %}</th>
+        <th class="text-right">{% trans 'Density' %} <small> (p/km2)</small></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in object_list %}
+      <tr>
+        <td></td>
+        <td class="text-right">{{ item.year }}</td>
+        <td class="text-right">{{ item.total|intcomma }}</td>
+        <td class="text-right">{{ item.female|intcomma }}</td>
+        <td class="text-right">{{ item.male|intcomma }}</td>
+        <td class="text-right">{{ item.change_rate|floatformat:2|intcomma }}</td>
+        <td class="text-right">{{ item.change|intcomma }}</td>
+        <td class="text-right">{{ item.fertility_rate|floatformat:1|intcomma }}</td>
+        <td class="text-right">{{ item.median_age|floatformat:1|intcomma }}</td>
+        <td class="text-right">{{ item.density|floatformat:1|intcomma }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <th></th>
+        <th class="text-right">{% trans 'Year' %}</th>
+        <th class="text-right">{% trans 'Total' %}</th>
+        <th class="text-right">{% trans 'Female' %}</th>
+        <th class="text-right">{% trans 'Male' %}</th>
+        <th class="text-right">{% trans 'Change %' %}</th>
+        <th class="text-right">{% trans 'Change' %}</th>
+        <th class="text-right">{% trans 'Fertility %' %}</th>
+        <th class="text-right">{% trans 'Median Age' %}</th>
+        <th class="text-right">{% trans 'Density' %} <small> (p/km2)</small></th>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+<!-- /.card-body -->
+{% endblock content %}
+

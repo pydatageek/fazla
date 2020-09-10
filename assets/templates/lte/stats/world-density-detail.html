@@ -1,0 +1,170 @@
+{% extends 'lte/stats/base-list.html' %}
+{% load static i18n humanize imagekit %}
+
+{% block meta_title_page_prefix %}World Population: {% endblock %}
+{% block meta_title %}Population Density in the World{% endblock %}
+
+{% block content %}
+{% if object_list %}
+<h2>
+  {{ density }} in the 
+  <a href="{% url 'world-detail' %}" 
+    title="About {{ title }}">
+    {{ title }}
+  </a>
+</h2>
+<div class="row">
+  <div class="col-sm-6 col-12">
+    <div class="card-body">
+      <p>{{ description }}</p>
+      <table id="list" class="table table-hover dataTable display">
+        <caption>{{ title }} Yearly Population Density</caption>
+        <thead>
+          <tr>
+            <th></th>
+            <th class="text-right">{% trans 'Year' %}</th>
+            <th class="text-right">{% trans 'Density (people/km2)' %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in object_list %}
+          <tr>
+            <td></td>
+            <td class="text-right">{{ item.year }}</td>
+            <td class="text-right">{{ item.density|floatformat:2|intcomma }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <th></th>
+            <th class="text-right">{% trans 'Year' %}</th>
+            <th class="text-right">{% trans 'Density (people/km2)' %}</th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <!-- /.card-body -->
+    
+  </div>
+  <div class="col-sm-6 col-12">
+
+    {% include 'lte/stats/side-menu-world.html' %}
+
+    <canvas id="yp" height="220" width="440" style="display: block; width: 440px; height: 220px;"></canvas>
+
+  </div>
+</div>
+
+
+{% else %}
+<p>
+  There is no population data on {{ title }}. <br>
+  Return to <a href="{% url 'world-detail' %}" 
+    title="About {{ title }}">
+    {{ title }}
+  </a> information page.
+</p>
+{% endif %}
+{% endblock content %}
+
+{% block extra_script %}
+
+<script>
+  $(function () {
+    var t = $('#list').DataTable({
+      "columnDefs": [{
+        "searchable": false,
+        "orderable": false,
+        "targets": 0
+      }],
+      "paging": true,
+      "pageLength": 10,
+      "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+      "lengthChange": true,
+      "searching": false,
+      "ordering": true,
+      "order": [[1, 'desc']],
+      "info": false,
+      "autoWidth": false,
+      "responsive": true,
+      "fixedHeader": true,
+    });
+
+    t.on( 'order.dt search.dt', function () {
+        t.column(0, {search:'applied', order:'applied'}).nodes().each(function (cell, i) {
+            cell.innerHTML = i+1;
+        });
+    }).draw();
+  });
+</script>
+
+<script>
+  var ctx = document.getElementById('yp').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: [
+      {% for item in object_list|slice:"::5" %}
+        {{ item.year }}
+        {% if not forloop.last %},{% endif %}
+      {% endfor %}  
+      ],
+      datasets: [
+        {
+          label: 'density (people/km2)',
+          data: [
+          {% for item in object_list|slice:"::5" %}
+            {{ item.density|floatformat:2 }}
+            {% if not forloop.last %},{% endif %}
+          {% endfor %} 
+          ],
+  
+          backgroundColor: window.chartColors.blue,
+          borderColor: window.chartColors.blue,
+          borderWidth: 1,
+          fill: false,
+        },
+      ],  
+      options: {
+        responsive: true,
+        scales: {
+          xAxes: [{
+            gridLines: {
+              display: false,
+              drawBorder: true,
+              drawOnChartArea: false,
+              drawTicks: false,
+            },
+          }],
+          yAxes: [{
+            gridLines: {
+              display: false,
+              drawBorder: true,
+              drawOnChartArea: false,
+              drawTicks: false,
+            },
+            ticks: {
+              stepSize: 5,
+              beginAtZero: false,
+              callback:  
+                function(value) {
+                  return  value.toLocaleString(); 
+                }
+            }
+          }]
+        },
+        layout: {
+          padding: {
+            left: 50,
+            right: 0,
+            top: 0,
+            bottom: 0
+          }
+        },
+      }
+    },
+  });
+</script>
+
+{% endblock %}

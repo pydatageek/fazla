@@ -1,0 +1,27 @@
+django==3.1.1
+django-ckeditor==5.9.0  # wysiwyg editor
+django-crum==0.7.7  # middleware for current user
+django-import-export==2.3.0
+django-widget-tweaks==1.4.8
+unidecode==1.1.1
+
+# needed for debugging purpose when debug False
+django-debug-toolbar==2.2
+
+# needed for image manipulation
+django-imagekit==4.0.2
+pillow==7.2.0
+
+# needed for rest_framework
+django-filter==2.3.0
+djangorestframework==3.11.1
+markdown==3.2.2
+
+# needed for postgreSQL
+psycopg2-binary==2.8.5
+
+# needed for deployment
+gunicorn==20.0.4
+
+# needed for automatic selenium tests
+# selenium==3.141.0

@@ -1,0 +1,153 @@
+{% load i18n static imagekit %}<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+{% get_current_language_bidi as LANGUAGE_BIDI %}
+<html lang="{{ LANGUAGE_CODE|default:'en-us' }}" 
+  {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+  {% block meta %}
+    <meta http-equiv="content-language" 
+      content="{{ LANGUAGE_CODE|default:'en-us' }}" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge" />
+    <meta name="author" content="Haluk Aksu @pydatageek" />
+    <meta name="reply-to" content="@pydatageek" />
+    <meta name="Copyright" content="All rights reserved." />
+    <meta name="creator" content="https://github.com/pydatageek/" />
+    <meta name="publisher" content="github.com @pydatageek" />
+    <meta name="description" 
+          content="{% block meta_description %}{% endblock %}" />
+    
+    <meta name="robots" content="all" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  {% endblock %}
+
+  <link rel="canonical" href="{{ request.site.root_url }}{{ request.path }}"/>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" 
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" 
+    href="{% static 'lte/plugins/fontawesome-free/css/all.min.css' %}">
+  {% block extra_plugin_style %}{% endblock %}
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'lte/css/adminlte.min.css' %}">
+  <!-- Site specific style -->
+  <link rel="stylesheet" href="{% static 'lte/css/site.css' %}">
+  {% block extra_style %}{% endblock %}
+  {% block extra_head %}{% endblock %}
+
+  <link rel="apple-touch-icon" href="{% static 'apple-touch-icon.png' %}" />
+  <link rel="icon" type="image/png" href="{% static 'favicon.png' %}" />
+  <link rel="shortcut icon" href="{% static 'favicon.ico' %}" />
+
+  {% block title_outer %}
+  <title>
+  {% if title_page_prefix %}
+    {% block meta_title_page_prefix %}{{ title_page_prefix }}: {% endblock %}
+  {% endif %}
+  {% block meta_title %}{{ title }}{% endblock %}
+  {% if title_page_suffix %} 
+    {% block meta_title_page_suffix %}{{ title_page_suffix }}: {% endblock %}
+  {% endif %}
+  {% if request.path != '/' %} | {% trans 'Fazla.NET' %}{% endif %}
+  </title>
+  {% endblock %}
+</head>
+
+{% load i18n %}
+<body 
+  class="hold-transition sidebar-collapse sidebar-mini 
+  {% block body_class %}{% endblock %}"> <!-- sidebar-mini -->
+<!-- Site wrapper -->
+<div class="wrapper">
+  <!-- Navbar -->
+
+  <!-- /.navbar -->
+
+  <!-- Navbar -->
+  {% include 'lte/_partials/_10_nav.html' %}
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  {% include 'lte/_partials/_20_aside.html' %}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>{% if title_page_prefix %}
+              <small><i>
+                {% block title_page_prefix %}
+                  {{ title_page_prefix }}: 
+                {% endblock %} 
+              </i></small>
+              {% endif %}
+              {% block title_page %}{{ title }} {% endblock %}
+              <small>{% block title_page_suffix %}
+                {% if object.code %}
+                  ({{ object.code }})
+                {% endif %}{% endblock %}
+              </small>
+            </h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"></li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-body">
+          {% block content %}{% endblock content %}
+        </div>
+        <div class="card-body">
+          {% block source %}{% endblock source %}
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Main Footer -->
+    {% include 'lte/_partials/_70_footer.html' %}  
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+<!-- jQuery -->
+<script src="{% static 'lte/plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script 
+  src="{% static 'lte/plugins/bootstrap/js/bootstrap.bundle.min.js' %}">
+</script>
+{% block extra_plugin_script %}{% endblock %}
+<!-- AdminLTE App -->
+<script src="{% static 'lte/js/adminlte.min.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'lte/js/demo.js' %}"></script>
+{% block extra_script %}{% endblock %}
+{% include 'lte/_partials/_91_ga.html' %}
+
+</body>
+</html>

@@ -1,0 +1,163 @@
+{% extends 'lte/places/base.html' %}
+{% load static i18n humanize imagekit %}
+
+{% block content %}
+<div class="align-items-center">
+  <div class="col-md-10 col-12">
+
+    <div class="alert alert-info alert-dismissible">
+      <h5>
+        <i class="icon fas fa-info"></i> 
+        The World, our planet Earth
+    </div>
+
+    <div class="container row">
+
+      <div class="col-md-6">
+
+        <div class="col-12">
+          <div class="info-box bg-warning">
+            <span class="info-box-icon d-none d-sm-block"><i class="far fa-map"></i></span>
+        
+            <div class="info-box-content">
+              <span class="info-box-text">Surface area</span>
+              <span class="info-box-number">
+                {{ world.area|floatformat:0|intcomma }}
+                km2
+              </span>
+        
+              <div class="progress">
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
+              <span class="progress-description">
+                Land area: <strong>
+                  {{ world.land_area|floatformat:0|intcomma }} km2
+                </strong> <br>
+                Water area: <strong>
+                  {{ world.water_area|floatformat:0|intcomma }} km2
+                </strong> 
+              </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+
+        <div class="col-12">
+          <div class="info-box bg-info">
+            <span class="info-box-icon d-none d-sm-block"><i class="fas fa-info"></i></span>
+        
+            <div class="info-box-content">
+              <span class="info-box-text my-2"><a href="{% url 'country-area-list' %}">
+                <i class="fas fa-map pr-2"></i> Country areas
+              </a></span>
+
+              <span class="info-box-text my-2"><a href="{% url 'phone-code-list' %}">
+                <i class="fas fa-phone-alt pr-2"></i> International phone codes
+              </a></span>
+
+              <span class="info-box-text my-2"><a href="{% url 'country-tld-list' %}">
+                <i class="fas fa-network-wired pr-2"></i> Top level domains (TLDs)
+              </a></span>
+
+              <span class="info-box-text my-2"><a href="{% url 'country-code-list' %}">
+                <i class="fas fa-code pr-2"></i> Country codes (ISO, UN, FIPS)
+              </a></span>
+              
+              <span class="info-box-text my-2"><a href="{% url 'driving-side-list' %}">
+                <i class="fas fa-car pr-2"></i> Country driving sides
+              </a></span>
+              
+              <span class="info-box-text my-2"><a href="{% url 'world-population-detail' %}#countries">
+                <i class="fas fa-users pr-2"></i> Country populations
+              </a></span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        
+    </div>
+
+      <div class="col-md-6">
+
+        <a href="{% url 'world-population-detail' %}" 
+          title="{{ title }} population">
+          <div class="col-12">
+            <!-- small card -->
+            <div class="small-box bg-warning">
+              <div class="inner">
+                <h3>
+                  {{ population.total|intcomma }}
+                </h3>
+
+                <p>Population</p>
+              </div>
+              <div class="icon">
+                <i class="fas fa-users"></i>
+              </div>
+              <span class="small-box-footer">
+                ({{ population.source.code }}, {{ population.year }})
+              </span>
+            </div>
+          </div>
+        </a>
+
+        <a href="{% url 'world-population-detail' %}" 
+          title="{{ title }} population">
+          <div class="col-12">
+            <!-- small card -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3>{{ population.male|intcomma }}</h3>
+
+                <p>Male Population</p>
+              </div>
+              <div class="icon">
+                <i class="fas fa-male"></i>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <a href="{% url 'world-population-detail' %}" 
+          title="{{ object.name }} population">
+          <div class="col-12">
+            <!-- small card -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h3>{{ population.female|intcomma }}</h3>
+
+                <p>Female Population</p>
+              </div>
+              <div class="icon">
+                <i class="fas fa-female"></i>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <a href="{% url 'world-population-detail' %}" 
+          title="{{ object.name }} population">
+          <div class="col-12">
+            <!-- small card -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>{{ population.median_age|floatformat:1 }}</h3>
+
+                <p>Median age</p>
+              </div>
+              <div class="icon">
+                <i class="fas fa-child"></i>
+              </div>
+            </div>
+          </div>
+        </a>
+          
+      </div>
+
+    </div>
+
+  </div>
+</div>
+{% endblock content %}

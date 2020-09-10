@@ -1,0 +1,82 @@
+{% extends 'lte/info/base.html' %}
+{% load static i18n humanize %}
+
+{% block extra_plugin_style %}
+<!-- DataTables -->
+<link rel="stylesheet" 
+  href="{% static 'lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+<link rel="stylesheet" 
+  href="{% static 'lte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+<link rel="stylesheet" 
+  href="{% static 'lte/plugins/datatables-fixedheader/css/fixedHeader.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="{% static 'lte/plugins/morris/morris.css' %}">  
+{% endblock %}
+
+{% block content %}{% endblock %}
+
+{% block extra_plugin_script %}
+<!-- DataTables -->
+<script 
+  src="{% static 'lte/plugins/datatables/jquery.dataTables.min.js' %}">
+</script>
+<script 
+  src="{% static 'lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}">
+</script>
+<script 
+  src="{% static 'lte/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}">
+</script>
+<script 
+  src="{% static 'lte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}">
+</script>
+<script 
+  src="{% static 'lte/plugins/datatables-fixedheader/js/dataTables.fixedHeader.min.js' %}">
+</script>
+<script 
+  src="{% static 'lte/plugins/datatables-fixedheader/js/fixedHeader.bootstrap4.min.js' %}">
+</script>
+
+<script 
+  src="{% static 'lte/plugins/raphael/raphael.min.js' %}">
+</script>
+<script src="{% static 'lte/plugins/morris/morris.min.js' %}"></script>
+<script src="{% static 'lte/plugins/chart.js/Chart.bundle.min.js' %}"></script>
+<script src="{% static 'lte/plugins/chart.js/utils.js' %}"></script>
+<script src="{% static 'lte/plugins/flot/jquery.flot.js' %}"></script>
+{% endblock %}
+
+{% block extra_script %}
+
+<script>
+
+$(document).ready(function(){
+  $(function () {
+    var t = $('#list').DataTable({
+      "columnDefs": [{
+        "searchable": false,
+        "orderable": false,
+        "targets": 0
+      }],
+      "paging": true,
+      "pageLength": -1,
+      "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "order": [[1, 'asc']],
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+      "fixedHeader": true,
+    });
+
+    t.on('order.dt search.dt', function () {
+        t.column(0, {search:'applied', order:'applied'}).nodes().each(function (cell, i) {
+            cell.innerHTML = i+1;
+        });
+    }).draw();
+  });
+});  
+  
+</script>
+
+{% endblock %}
