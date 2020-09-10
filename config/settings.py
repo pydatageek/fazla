@@ -26,7 +26,9 @@ SECRET_KEY = '02xa*0^&j4vdfratv*d9_^e@av27ndl&r4&=kp9^0)x!63#w8*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '.localhost']
+ALLOWED_HOSTS = [
+    'localhost', '.localhost',
+    'fazla.net', '.fazla.net', '178.62.30.148']
 
 
 # Application definition
