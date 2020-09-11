@@ -97,42 +97,26 @@
 </script>
 
 <script>
-$(document).ready(function(){
-  var labels = [
-        {% for item in object_list %}
-          {{ item.year }}
-          {% if not forloop.last %},{% endif %}
-        {% endfor %}  
-        ];
-  var dataPack1 = [
-            {% for item in object_list %}
-              {{ item.total }}
-              {% if not forloop.last %},{% endif %}
-            {% endfor %} 
-            ];
-  var dataPack2 = [
-            {% for item in object_list %}
-              {{ item.female }}
-              {% if not forloop.last %},{% endif %}
-            {% endfor %} 
-            ];
-  var dataPack3 = [
-            {% for item in object_list %}
-              {{ item.male }}
-              {% if not forloop.last %},{% endif %}
-            {% endfor %} 
-            ];
-
-
   var ctx = document.getElementById('yp').getContext('2d');
   var myChart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: labels,
+      labels: [
+      {% for item in object_list %}
+        {{ item.year }}
+        {% if not forloop.last %},{% endif %}
+      {% endfor %}  
+      ],
       datasets: [
         {
           label: 'total population',
-          data: dataPack1,
+          data: [
+          {% for item in object_list %}
+            {{ item.total }}
+            {% if not forloop.last %},{% endif %}
+          {% endfor %} 
+          ],
+  
           backgroundColor: window.chartColors.orange,
           borderColor: window.chartColors.orange,
           borderWidth: 1,
@@ -140,7 +124,13 @@ $(document).ready(function(){
         },
         {
           label: 'female',
-          data: dataPack2,
+          data: [
+          {% for item in object_list %}
+            {{ item.female }}
+            {% if not forloop.last %},{% endif %}
+          {% endfor %} 
+          ],
+  
           backgroundColor: window.chartColors.red,
           borderColor: window.chartColors.red,
           borderWidth: 1,
@@ -148,7 +138,13 @@ $(document).ready(function(){
         },
         {
           label: 'male',
-          data: dataPack3,
+          data: [
+          {% for item in object_list %}
+            {{ item.male }}
+            {% if not forloop.last %},{% endif %}
+          {% endfor %} 
+          ],
+  
           backgroundColor: window.chartColors.blue,
           borderColor: window.chartColors.blue,
           borderWidth: 1,
@@ -193,7 +189,6 @@ $(document).ready(function(){
       }
     },
   });
-});
 </script>
 
 {% endblock %}
