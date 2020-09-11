@@ -9,6 +9,13 @@ django-import-export==2.3.0
 django-widget-tweaks==1.4.8
 unidecode==1.1.1
 
+# needed for cache
+redis==3.5.3
+django-redis==4.12.1 
+
+# needed for compression
+django-compressor==2.4
+
 # needed for debugging purpose when debug False
 django-debug-toolbar==2.2
 

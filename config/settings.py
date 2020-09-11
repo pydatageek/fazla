@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     'ckeditor',  # wysiwyg editor -> requires ./manage.py collectstatic
     'widget_tweaks',
 
+    'compressor',
+
     'core',
     'accounts',
     'sources',
@@ -235,3 +237,29 @@ if DEBUG:
 SITE_ID = 1
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 40000
+
+
+# for compression
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+
+    'compressor.finders.CompressorFinder',
+)
+# COMPRESS_ENABLED = True
+
+# redis configuration: for cache
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+
+# Cache time to live is 5 minutes
+CACHE_TTL = 60 * 5
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}

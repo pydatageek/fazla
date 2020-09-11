@@ -1,41 +1,49 @@
 {% extends 'lte/stats/base.html' %}
-{% load static i18n humanize %}
+{% load static i18n humanize compress %}
 
 {% block extra_plugin_style %}
-<!-- DataTables -->
-<link rel="stylesheet" 
-  href="{% static 'lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
-<link rel="stylesheet" 
-  href="{% static 'lte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
-<link rel="stylesheet" 
-  href="{% static 'lte/plugins/datatables-fixedheader/css/fixedHeader.bootstrap4.min.css' %}">
+
+  {% compress css %} 
+  <!-- DataTables -->
+  <link rel="stylesheet" 
+    href="{% static 'lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+  <link rel="stylesheet" 
+    href="{% static 'lte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+  <link rel="stylesheet" 
+    href="{% static 'lte/plugins/datatables-fixedheader/css/fixedHeader.bootstrap4.min.css' %}">
+  {% endcompress %}
+
 {% endblock %}
 
 {% block content %}{% endblock %}
 
 {% block extra_plugin_script %}
-<!-- DataTables -->
-<script 
-  src="{% static 'lte/plugins/datatables/jquery.dataTables.min.js' %}">
-</script>
-<script 
-  src="{% static 'lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}">
-</script>
-<script 
-  src="{% static 'lte/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}">
-</script>
-<script 
-  src="{% static 'lte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}">
-</script>
-<script 
-  src="{% static 'lte/plugins/datatables-fixedheader/js/dataTables.fixedHeader.min.js' %}">
-</script>
-<script 
-  src="{% static 'lte/plugins/datatables-fixedheader/js/fixedHeader.bootstrap4.min.js' %}">
-</script>
 
-<script src="{% static 'lte/plugins/chart.js/Chart.bundle.min.js' %}"></script>
-<script src="{% static 'lte/plugins/chart.js/utils.js' %}"></script>
+  {% compress js %} 
+  <!-- DataTables -->
+  <script 
+    src="{% static 'lte/plugins/datatables/jquery.dataTables.min.js' %}">
+  </script>
+  <script 
+    src="{% static 'lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}">
+  </script>
+  <script 
+    src="{% static 'lte/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}">
+  </script>
+  <script 
+    src="{% static 'lte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}">
+  </script>
+  <script 
+    src="{% static 'lte/plugins/datatables-fixedheader/js/dataTables.fixedHeader.min.js' %}">
+  </script>
+  <script 
+    src="{% static 'lte/plugins/datatables-fixedheader/js/fixedHeader.bootstrap4.min.js' %}">
+  </script>
+
+  <script src="{% static 'lte/plugins/chart.js/Chart.bundle.min.js' %}"></script>
+  <script src="{% static 'lte/plugins/chart.js/utils.js' %}"></script>
+  {% endcompress %}
+
 {% endblock %}
 
 {% block extra_script %}
