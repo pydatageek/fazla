@@ -24,7 +24,7 @@ ASSETS_DIR = BASE_DIR / 'assets'
 SECRET_KEY = '02xa*0^&j4vdfratv*d9_^e@av27ndl&r4&=kp9^0)x!63#w8*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'localhost', '.localhost',
