@@ -21,7 +21,7 @@ urlpatterns = [
     path('i/international-phone-codes/', InfoTemplateView.as_view(
         template_name=template_base+'info/'+'phone-code-detail.html'
     ), name='phone-code-list'),
-    path('i/country-codes/', InfoTemplateView.as_view(
+    path('i/country-codes-iso-un-fips/', InfoTemplateView.as_view(
         template_name=template_base+'info/'+'country-code-detail.html'
     ), name='country-code-list'),
     path('i/country-driving-sides/', InfoTemplateView.as_view(
@@ -30,7 +30,7 @@ urlpatterns = [
     path('i/country-surface-areas/', InfoTemplateView.as_view(
         template_name=template_base+'info/'+'country-area-detail.html'
     ), name='country-area-list'),
-    path('i/top-level-domains-tlds/', InfoTemplateView.as_view(
+    path('i/international-top-level-domains-tlds/', InfoTemplateView.as_view(
         template_name=template_base+'info/'+'country-tld-detail.html'
     ), name='country-tld-list'),
     path('i/<slug:slug>/', InfoDetailView.as_view(
