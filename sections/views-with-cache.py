@@ -1,7 +1,11 @@
+from django.conf import settings
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from django.shortcuts import get_object_or_404
 from django.urls import resolve
 from django.utils import timezone
+from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
+from django.views.decorators.cache import cache_page
 from django.views.generic import DetailView, ListView, TemplateView
 
 from info.models import Info
@@ -13,6 +17,7 @@ from stats.models import (
 )
 
 year = timezone.now().year
+CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
 
 class HomeView(TemplateView):
@@ -29,6 +34,7 @@ class CountryListView(ListView):
         return context
 
 
+@method_decorator(cache_page(CACHE_TTL), name='dispatch')
 class CountryDetailView(DetailView):
     """"""
     model = Country
@@ -42,6 +48,7 @@ class CountryDetailView(DetailView):
         return context
 
 
+# @method_decorator(cache_page(CACHE_TTL), name='dispatch')
 class WorldDetailView(TemplateView):
     """"""
 
@@ -75,6 +82,7 @@ class ContinentDetailView(DetailView):
         return context
 
 
+# @method_decorator(cache_page(CACHE_TTL), name='dispatch')
 class CountryPopulationDetailView(ListView):
     """"""
     model = CountryPopulation
@@ -121,6 +129,7 @@ class InternationalOrganizationPopulationDetailView(ListView):
         return context
 
 
+# @method_decorator(cache_page(CACHE_TTL), name='dispatch')
 class WorldPopulationDetailView(ListView):
     """"""
     model = WorldPopulation
@@ -144,6 +153,7 @@ class WorldPopulationDetailView(ListView):
         return context
 
 
+# @method_decorator(cache_page(CACHE_TTL), name='dispatch')
 class InfoTemplateView(TemplateView):
     """"""
 

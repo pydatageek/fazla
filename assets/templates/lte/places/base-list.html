@@ -1,9 +1,8 @@
 {% extends 'lte/places/base.html' %}
-{% load static i18n humanize compress %}
+{% load static i18n humanize %}
 
 {% block extra_plugin_style %}
 
-  {% compress css %} 
   <!-- DataTables -->
   <link rel="stylesheet" 
     href="{% static 'lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
@@ -11,7 +10,6 @@
     href="{% static 'lte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
     <link rel="stylesheet" 
     href="{% static 'lte/plugins/datatables-fixedheader/css/fixedHeader.bootstrap4.min.css' %}">
-  {% endcompress %}
 
 {% endblock %}
 
@@ -19,7 +17,6 @@
 
 {% block extra_plugin_script %}
 
-  {% compress js %} 
   <!-- DataTables -->
   <script 
     src="{% static 'lte/plugins/datatables/jquery.dataTables.min.js' %}">
@@ -39,7 +36,6 @@
   <script 
     src="{% static 'lte/plugins/datatables-fixedheader/js/fixedHeader.bootstrap4.min.js' %}">
   </script>
-  {% endcompress %}
 
 {% endblock %}
 

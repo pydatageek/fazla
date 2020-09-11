@@ -24,7 +24,7 @@ ASSETS_DIR = BASE_DIR / 'assets'
 SECRET_KEY = '02xa*0^&j4vdfratv*d9_^e@av27ndl&r4&=kp9^0)x!63#w8*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost', '.localhost',
@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
 
     # 'django_redis',
-    'compressor',
+    # 'compressor',
 
     'core',
     'accounts',
@@ -120,22 +120,22 @@ DATABASES = {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # },
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'png04_',
-    #     'USER': 'postgres',
-    #     'PASSWORD': '1',
-    #     'HOST': 'localhost',
-    #     'PORT': '',
-    # },
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'fn',
-        'USER': 'fn',
-        'PASSWORD': '123fazla!..-',
+        'NAME': 'png04_',
+        'USER': 'postgres',
+        'PASSWORD': '1',
         'HOST': 'localhost',
         'PORT': '',
     },
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'fn',
+    #     'USER': 'fn',
+    #     'PASSWORD': '123fazla!..-',
+    #     'HOST': 'localhost',
+    #     'PORT': '',
+    # },
 }
 
 
@@ -239,7 +239,7 @@ SITE_ID = 1
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 40000
 
-
+"""
 # for compression
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -264,3 +264,4 @@ CACHES = {
         }
     }
 }
+"""
