@@ -48,6 +48,7 @@ class CountryDetailView(DetailView):
         return context
 
 
+@method_decorator(cache_page(CACHE_TTL), name='dispatch')
 class WorldDetailView(TemplateView):
     """"""
 
@@ -81,6 +82,7 @@ class ContinentDetailView(DetailView):
         return context
 
 
+@method_decorator(cache_page(CACHE_TTL), name='dispatch')
 class CountryPopulationDetailView(ListView):
     """"""
     model = CountryPopulation
@@ -127,6 +129,7 @@ class InternationalOrganizationPopulationDetailView(ListView):
         return context
 
 
+@method_decorator(cache_page(CACHE_TTL), name='dispatch')
 class WorldPopulationDetailView(ListView):
     """"""
     model = WorldPopulation
@@ -150,6 +153,7 @@ class WorldPopulationDetailView(ListView):
         return context
 
 
+@method_decorator(cache_page(CACHE_TTL), name='dispatch')
 class InfoTemplateView(TemplateView):
     """"""
 

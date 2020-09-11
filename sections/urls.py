@@ -36,9 +36,9 @@ urlpatterns = [
     path('i/<slug:slug>/', InfoDetailView.as_view(
         template_name=template_base+'info/'+'info-detail.html'
     ), name='info-detail'),
-    path('i/', InfoListView.as_view(
-        template_name=template_base+'info/'+'info-list.html'
-    ), name='info-list'),
+    # path('i/', InfoListView.as_view(
+    #     template_name=template_base+'info/'+'info-list.html'
+    # ), name='info-list'),
 
 
     path('world/population/growth-rate/',
@@ -92,21 +92,21 @@ urlpatterns = [
              template_name=template_base+'places/'+'country-detail.html'
          ), name='country-detail'),
 
-    path('o/<str:organization_slug>/population/',
-         InternationalOrganizationPopulationDetailView.as_view(
-             template_name=template_base+'stats/'+'organization-population-detail.html'
-         ), name='organization-population-detail'),
+    # path('o/<str:organization_slug>/population/',
+    #      InternationalOrganizationPopulationDetailView.as_view(
+    #          template_name=template_base+'stats/'+'organization-population-detail.html'
+    #      ), name='organization-population-detail'),
 
 
 
-    path('r/c/<slug:slug>/',
-         ContinentDetailView.as_view(
-             template_name=template_base+'places/'+'continent-detail.html'
-         ), name='continent-detail'),
-    path('r/c/',
-         ContinentListView.as_view(
-             template_name=template_base+'places/'+'continent-list.html'
-         ), name='continent-list'),
+    # path('r/c/<slug:slug>/',
+    #      ContinentDetailView.as_view(
+    #          template_name=template_base+'places/'+'continent-detail.html'
+    #      ), name='continent-detail'),
+    # path('r/c/',
+    #      ContinentListView.as_view(
+    #          template_name=template_base+'places/'+'continent-list.html'
+    #      ), name='continent-list'),
 
 
     path('', RedirectView.as_view(
