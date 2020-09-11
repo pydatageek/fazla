@@ -85,7 +85,7 @@ class CountryPopulationDetailView(ListView):
         qs = super().get_queryset()
         # country_slug = self.kwargs['country_slug']
         return qs.filter(
-            country__slug=self.kwargs['country_slug']).order_by('-year')
+            country__slug=self.kwargs['country_slug']).order_by('year')
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -128,7 +128,7 @@ class WorldPopulationDetailView(ListView):
     def get_queryset(self):
         qs = super().get_queryset()
         # country_slug = self.kwargs['country_slug']
-        return qs.all().order_by('-year')
+        return qs.all().order_by('year')
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
