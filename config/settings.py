@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'ckeditor',  # wysiwyg editor -> requires ./manage.py collectstatic
     'widget_tweaks',
 
+    'django_redis',
     'compressor',
 
     'core',
