@@ -158,8 +158,8 @@ class InfoTemplateView(TemplateView):
             slug = 'international-phone-codes'
             title = _('International Phone Codes')
         elif current_url == 'country-code-list':
-            slug = 'country-codes'
-            title = _('Country Codes')
+            slug = 'country-codes-iso-un-fips'
+            title = _('Country Codes (ISO, UN, FIPS)')
         elif current_url == 'driving-side-list':
             slug = 'country-driving-sides'
             title = _('Countries Driving Sides')
@@ -167,8 +167,8 @@ class InfoTemplateView(TemplateView):
             slug = 'country-surface-areas'
             title = _('Country Surface Areas')
         elif current_url == 'country-tld-list':
-            slug = 'top-level-domains-tlds'
-            title = _('Top Level Domains (TLDs)')
+            slug = 'international-top-level-domains-tlds'
+            title = _('International Top Level Domains (TLDs)')
         else:
             slug = ''
 

@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'places',
     'politics',
     'info',
-    'stats'
+    'stats',
 ]
 
 if DEBUG:
