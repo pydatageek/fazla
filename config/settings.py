@@ -38,7 +38,7 @@ def get_secret(setting, secrets=secrets):
 SECRET_KEY = get_secret('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost', '.localhost',
@@ -68,9 +68,6 @@ INSTALLED_APPS = [
     'ckeditor',  # wysiwyg editor -> requires ./manage.py collectstatic
     'widget_tweaks',
 
-    # 'django_redis',
-    # 'compressor',
-
     'core',
     'accounts',
     'sources',
@@ -78,6 +75,8 @@ INSTALLED_APPS = [
     'politics',
     'info',
     'stats',
+
+    'compressor',  # for compression
 ]
 
 if DEBUG:
@@ -264,6 +263,25 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Whitenoise cache policy
 WHITENOISE_MAX_AGE = 31536000 if not DEBUG else 0
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+
+    'compressor.finders.CompressorFinder',
+)
+
+COMPRESS_STORAGE = "compressor.storage.GzipCompressorFileStorage"
+COMPRESS_ROOT = STATIC_ROOT
+COMPRESS_ENABLED = True
+COMPRESS_OFFLINE = True if DEBUG == False else False
+
+COMPRESS_FILTERS = {
+    "css": [
+        "compressor.filters.css_default.CssAbsoluteFilter",
+        "compressor.filters.cssmin.rCSSMinFilter",
+    ],
+    "js": ["compressor.filters.jsmin.JSMinFilter"],
+}
 
 """
 # for compression

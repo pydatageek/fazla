@@ -6,6 +6,7 @@ Django==3.1.1
 django-appconf==1.0.4
 django-ckeditor==5.9.0
 django-compression-middleware==0.4.1
+django-compressor==2.4
 django-crum==0.7.7
 django-debug-toolbar==2.2
 django-filter==2.3.0
@@ -27,6 +28,8 @@ Pillow==7.2.0
 psycopg2-binary==2.8.5
 pytz==2020.1
 PyYAML==5.3.1
+rcssmin==1.0.6
+rjsmin==1.1.0
 six==1.15.0
 sqlparse==0.3.1
 tablib==2.0.0
