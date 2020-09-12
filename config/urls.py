@@ -1,9 +1,16 @@
 from django.conf import settings
+from django.conf.urls import (
+    handler400, handler403, handler404, handler500
+)
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
 
+handler400 = 'sections.views.handler400'
+handler403 = 'sections.views.handler403'
+handler404 = 'sections.views.handler404'
+handler500 = 'sections.views.handler500'
 
 urlpatterns = [
     path('adminp/', admin.site.urls),
