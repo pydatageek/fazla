@@ -275,13 +275,13 @@ COMPRESS_ROOT = STATIC_ROOT
 COMPRESS_ENABLED = True
 # COMPRESS_OFFLINE = True if DEBUG == False else False
 
-# COMPRESS_FILTERS = {
-#     "css": [
-#         "compressor.filters.css_default.CssAbsoluteFilter",
-#         "compressor.filters.cssmin.rCSSMinFilter",
-#     ],
-#     "js": ["compressor.filters.jsmin.JSMinFilter"],
-# }
+COMPRESS_FILTERS = {
+    "css": [
+        "compressor.filters.css_default.CssAbsoluteFilter",
+        "compressor.filters.cssmin.rCSSMinFilter",
+    ],
+    "js": ["compressor.filters.jsmin.JSMinFilter"],
+}
 
 """
 # for compression
