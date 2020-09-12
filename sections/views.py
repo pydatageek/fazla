@@ -1,8 +1,9 @@
-from django.shortcuts import get_object_or_404, render_to_response
+from django.shortcuts import get_object_or_404, render
 from django.template import RequestContext
 from django.urls import resolve
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from django.views.defaults import server_error
 from django.views.generic import DetailView, ListView, TemplateView
 
 from info.models import Info
@@ -16,28 +17,44 @@ from stats.models import (
 year = timezone.now().year
 
 
-def handler400(request, exception, template_name="lte/400.html"):
-    response = render_to_response(template_name)
-    response.status_code = 400
-    return response
+def handler400(request, exception):
+    return render(request, 'lte/400.html', status=400)
 
 
-def handler403(request, exception, template_name="lte/403.html"):
-    response = render_to_response(template_name)
-    response.status_code = 403
-    return response
+def handler403(request, exception):
+    return render(request, 'lte/403.html', status=403)
 
 
-def handler404(request, exception, template_name="lte/404.html"):
-    response = render_to_response(template_name)
-    response.status_code = 404
-    return response
+def handler404(request, exception):
+    return render(request, 'lte/404.html', status=404)
 
 
-def handler500(request, exception, template_name="lte/500.html"):
-    response = render_to_response(template_name)
-    response.status_code = 500
-    return response
+def handler500(request):
+    return server_error(request, 'lte/500.html')
+
+
+# def handler400(request, exception, template_name="lte/400.html"):
+#     response = render(request, template_name=template_name)
+#     response.status_code = 400
+#     return response
+
+
+# def handler403(request, exception, template_name="lte/403.html"):
+#     response = render(request, template_name=template_name)
+#     response.status_code = 403
+#     return response
+
+
+# def handler404(request, exception, template_name="lte/404.html"):
+#     response = render(request, template_name=template_name)
+#     response.status_code = 404
+#     return response
+
+
+# def handler500(request, exception, template_name="lte/500.html"):
+#     response = render(request, template_name=template_name)
+#     response.status_code = 500
+#     return response
 
 
 class HomeView(TemplateView):
