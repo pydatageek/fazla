@@ -273,7 +273,7 @@ STATICFILES_FINDERS = (
 COMPRESS_STORAGE = "compressor.storage.GzipCompressorFileStorage"
 COMPRESS_ROOT = STATIC_ROOT
 COMPRESS_ENABLED = True
-COMPRESS_OFFLINE = True if DEBUG == False else False
+# COMPRESS_OFFLINE = True if DEBUG == False else False
 
 # COMPRESS_FILTERS = {
 #     "css": [
