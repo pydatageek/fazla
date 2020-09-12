@@ -11,6 +11,9 @@ unidecode==1.1.1
 
 # needed for compression
 # django-compressor==2.4
+django-compression-middleware==0.4.1
+Brotli==1.0.9
+whitenoise==5.2.0
 
 # needed for debugging purpose when debug False
 django-debug-toolbar==2.2

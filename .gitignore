@@ -5,6 +5,7 @@
 
 ### Custom ###
 tests/
+/secrets.json
 
 ### Django ###
 *.log

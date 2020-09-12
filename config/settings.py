@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+from django.core.exceptions import ImproperlyConfigured
+import json
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -21,10 +23,22 @@ ASSETS_DIR = BASE_DIR / 'assets'
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '02xa*0^&j4vdfratv*d9_^e@av27ndl&r4&=kp9^0)x!63#w8*'
+with open(BASE_DIR / 'secrets.json') as f:
+    secrets = json.load(f)
+
+
+def get_secret(setting, secrets=secrets):
+    """Get secret setting or fail with ImproperlyConfigured"""
+    try:
+        return secrets[setting]
+    except KeyError:
+        raise ImproperlyConfigured("Set the {} setting".format(setting))
+
+
+SECRET_KEY = get_secret('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'localhost', '.localhost',
@@ -34,6 +48,8 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',  # for compression
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -71,6 +87,7 @@ if DEBUG:
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # for compression
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -79,6 +96,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'crum.CurrentRequestUserMiddleware',  # to get current_user on model save
+
+    "compression_middleware.middleware.CompressionMiddleware",  # for compression
 ]
 
 if DEBUG:
@@ -122,17 +141,17 @@ DATABASES = {
     # },
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'png04_',
-    #     'USER': 'postgres',
-    #     'PASSWORD': '1',
+    #     'NAME': get_secret('DB_LOCAL_NAME'),
+    #     'USER': get_secret('DB_LOCAL_UNAME'),
+    #     'PASSWORD': get_secret('DB_LOCAL_PASS'),
     #     'HOST': 'localhost',
     #     'PORT': '',
     # },
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'fn',
-        'USER': 'fn',
-        'PASSWORD': '123fazla!..-',
+        'NAME': get_secret('DB_REMOTE_NAME'),
+        'USER': get_secret('DB_REMOTE_UNAME'),
+        'PASSWORD': get_secret('DB_REMOTE_PASS'),
         'HOST': 'localhost',
         'PORT': '',
     },
@@ -238,6 +257,13 @@ if DEBUG:
 SITE_ID = 1
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 40000
+
+
+# for compression
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Whitenoise cache policy
+WHITENOISE_MAX_AGE = 31536000 if not DEBUG else 0
+
 
 """
 # for compression

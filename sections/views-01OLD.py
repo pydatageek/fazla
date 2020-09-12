@@ -83,13 +83,13 @@ class CountryPopulationDetailView(ListView):
 
     def get_queryset(self):
         qs = super().get_queryset()
+        # country_slug = self.kwargs['country_slug']
         return qs.filter(
-            country__slug=self.kwargs['country_slug']) \
-            .order_by('year').select_related('country')
+            country__slug=self.kwargs['country_slug']).order_by('year')
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        # context['title'] = self.object_list.first().country.name
+        # context['title'] = self.object.country.name
         context['title'] = Country.objects.filter(
             slug=self.kwargs['country_slug'])[0]
         context['title_page_prefix'] = _('Population')
