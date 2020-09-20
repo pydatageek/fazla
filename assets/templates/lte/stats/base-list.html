@@ -17,6 +17,80 @@
 
 {% block extra_script %}
 
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart() {
+    var data = new google.visualization.DataTable();
+
+    data.addColumn('string', 'Year');
+    data.addColumn('number', 'Total population');
+    data.addColumn('number', 'Female');
+    data.addColumn('number', 'Male');
+    data.addRows({{ wp_chart|safe }});
+
+    data.sort({column: 0, desc: false});
+
+    var options = {
+      title: '{{ title }} {{ title_page_prefix }}',
+      hAxis: { 'title': 'Year'},
+      vAxis: { 'title': 'Population'},
+      curveType: 'function',
+      legend: { position: 'bottom' },
+      animation: {
+        startup: true,
+        duration: 1000,
+        easing: 'out',
+      },
+      height: 400, 
+      width: '100%',
+    };
+    
+    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+    chart.draw(data, options);
+  }
+</script>
+
+<script type="text/javascript">
+  if (document.getElementById('curve_chart2')) {
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var data2 = new google.visualization.DataTable();
+
+      data2.addColumn('string', 'Year');
+      data2.addColumn('number', 'Total population');
+      data2.addColumn('number', 'Female');
+      data2.addColumn('number', 'Male');
+      data2.addRows({{ wp_future_chart|safe }});
+
+      data2.sort({column: 0, desc: false});
+
+      var options = {
+        title: '{{ title }} {{ title_page_prefix }} in the Future',
+        hAxis: { 'title': 'Year'},
+        vAxis: { 'title': 'Population'},
+        curveType: 'function',
+        legend: { position: 'bottom' },
+        animation: {
+          startup: true,
+          duration: 1000,
+          easing: 'out',
+        },
+        height: 400, 
+        width: '100%',
+      };
+      
+      var chart2 = new google.visualization.LineChart(document.getElementById('curve_chart2'));
+
+      chart2.draw(data2, options);
+    }
+  }
+</script>
+
 <script>
   $(function () {
     var t = $('#list').DataTable({
@@ -70,106 +144,6 @@
         });
     }).draw();
   });  
-</script>
-
-<script>
-$(document).ready(function(){
-  var labels = [
-        {% for item in object_list %}
-          {{ item.year }}
-          {% if not forloop.last %},{% endif %}
-        {% endfor %}  
-        ];
-  var dataPack1 = [
-            {% for item in object_list %}
-              {{ item.total }}
-              {% if not forloop.last %},{% endif %}
-            {% endfor %} 
-            ];
-  var dataPack2 = [
-            {% for item in object_list %}
-              {{ item.female }}
-              {% if not forloop.last %},{% endif %}
-            {% endfor %} 
-            ];
-  var dataPack3 = [
-            {% for item in object_list %}
-              {{ item.male }}
-              {% if not forloop.last %},{% endif %}
-            {% endfor %} 
-            ];
-
-
-  var ctx = document.getElementById('yp').getContext('2d');
-  var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: labels,
-      datasets: [
-        {
-          label: 'total population',
-          data: dataPack1,
-          backgroundColor: window.chartColors.orange,
-          borderColor: window.chartColors.orange,
-          borderWidth: 1,
-          fill: false,
-        },
-        {
-          label: 'female',
-          data: dataPack2,
-          backgroundColor: window.chartColors.red,
-          borderColor: window.chartColors.red,
-          borderWidth: 1,
-          fill: false,
-        },
-        {
-          label: 'male',
-          data: dataPack3,
-          backgroundColor: window.chartColors.blue,
-          borderColor: window.chartColors.blue,
-          borderWidth: 1,
-          fill: false,
-        },
-      ],  
-      options: {
-        responsive: true,
-        scales: {
-          xAxes: [{
-            gridLines: {
-              display: false,
-              drawBorder: true,
-              drawOnChartArea: false,
-              drawTicks: false,
-            },
-          }],
-          yAxes: [{
-            gridLines: {
-              display: false,
-              drawBorder: true,
-              drawOnChartArea: false,
-              drawTicks: false,
-            },
-            ticks: {
-              stepSize: 10,
-              beginAtZero: false,
-              callback: function (value) {
-                return numeral(value).format('$ 0,0')
-              }
-            }
-          }]
-        },
-        layout: {
-          padding: {
-            left: 50,
-            right: 0,
-            top: 0,
-            bottom: 0
-          }
-        },
-      }
-    },
-  });
-});
 </script>
 
 {% endblock %}

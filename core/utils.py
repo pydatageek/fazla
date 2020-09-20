@@ -6,8 +6,11 @@ import string
 
 from datetime import date, datetime
 
+from django.core.serializers.json import DjangoJSONEncoder
 from django.core.validators import ValidationError
 from django.utils import timezone
+from django.utils.encoding import force_text
+from django.utils.functional import Promise
 from django.utils.translation import gettext_lazy as _
 
 
@@ -43,3 +46,10 @@ def random_chars(counts):
     return ''.join(['{}'.format(
         random.choice(string.ascii_lowercase + string.digits))
         for _ in range(counts)])
+
+
+class LazyEncoder(DjangoJSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, Promise):
+            return force_text(obj)
+        return super(LazyEncoder, self).default(obj)

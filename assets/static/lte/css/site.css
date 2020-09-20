@@ -17,3 +17,36 @@
 .callout a:hover {
   color: #253042;
 }
+
+.cssHeaderRow {
+  text-align: right;
+  background-color: #fff;
+}
+.cssTableRow {
+  background-color: #fff;
+}
+.cssOddTableRow {
+  background-color: #fff;
+}
+.cssSelectedTableRow {
+  /* font-size: 20px; */
+  font-weight:bold;
+}
+.cssHoverTableRow {
+  background: #ccc;
+}
+.cssHeaderCell {
+  /* color: #FFFFFF; */
+  /* font-size: 16px; */
+  padding: 10px !important;
+  border: solid 1px #FFFFFF;
+}
+.cssTableCell {
+  /* font-size: 16px; */
+  padding: 10px !important;
+  border: solid 1px #FFFFFF;
+  text-align: right;
+}
+.cssRowNumberCell {
+  text-align: center;
+}

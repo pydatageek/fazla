@@ -26,7 +26,7 @@ class SeoBaseStampedModel(BaseStampedModel, SeoModel):
 
     def save(self, *args, **kwargs):
         if not self.meta_title:
-            self.meta_title = f'{self.name} {self.id}'
+            self.meta_title = f'{self.name}'
 
         if not self.added_at:
             self.added_at = timezone.now()

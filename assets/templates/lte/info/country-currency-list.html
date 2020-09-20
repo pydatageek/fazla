@@ -1,0 +1,55 @@
+{% extends 'lte/info/base-list.html' %}
+{% load static i18n humanize imagekit %}
+
+{% block meta_title_page_prefix %}{{ title_page_prefix }}: {% endblock %}
+{% block meta_title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="row">
+
+  <div class="col-sm-7 col-12">
+    <div class="card-body">
+      <p>{{ description }}</p>
+      <table id="list" class="table table-hover dataTable display">
+        <caption>{{ title }} List</caption>
+        <thead>
+          <tr>
+            <th></th>
+            <th>{% trans 'Country' %}</th>
+            <th class="text-right">{% trans 'Currency (ISO code)' %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in object_list %}
+          <tr>
+            <td></td>
+            <td>
+              <a href="{% url 'country-detail' item.slug %}">
+                {{ item.name }}</a> 
+            </td>
+            <td class="text-right">
+              {% for curr in item.currencies.all %}
+                {{ curr.name }} ({{ curr.iso3 }})
+              {% endfor %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <th></th>
+            <th>{% trans 'Name' %}</th>
+            <th>{% trans 'Currency' %}</th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <!-- /.card-body -->
+  </div>
+
+  <div class="col-sm-5 col-12">
+    {% include 'lte/info/side-menu.html' %}
+  </div>  
+
+</div>
+{% endblock %}

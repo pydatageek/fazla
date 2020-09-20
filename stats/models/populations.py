@@ -19,7 +19,7 @@ class Population(models.Model):
     change_rate = models.FloatField(
         _('change %'), blank=True, null=True)
     fertility_rate = models.FloatField(
-        _('fertility %'), blank=True, null=True)
+        _('fertility'), blank=True, null=True)
     median_age = models.FloatField(
         _('median age'), blank=True, null=True)
     density = models.FloatField(
@@ -47,6 +47,16 @@ class WorldPopulation(Population):
 
     item = GenericRelation(Item)
 
+    def male_percent(self):
+        if self.total and self.male and self.female:
+            return self.male * 100 / self.total
+    male_percent.short_description = _('male %')
+
+    def female_percent(self):
+        if self.total and self.male and self.female:
+            return self.female * 100 / self.total
+    female_percent.short_description = _('female %')
+
     def __str__(self):
         return f'{self.year}'
 
@@ -71,6 +81,16 @@ class InternationalOrganizationPopulation(Population):
 
     item = GenericRelation(Item)
 
+    def male_percent(self):
+        if self.total and self.male and self.female:
+            return self.male * 100 / self.total
+    male_percent.short_description = _('male %')
+
+    def female_percent(self):
+        if self.total and self.male and self.female:
+            return self.female * 100 / self.total
+    female_percent.short_description = _('female %')
+
     def __str__(self):
         return f'{self.organization} - {self.year}'
 
@@ -94,6 +114,16 @@ class CountryPopulation(Population):
         related_name='populations', verbose_name=_('country'))
 
     item = GenericRelation(Item)
+
+    def male_percent(self):
+        if self.total and self.male and self.female:
+            return self.male * 100 / self.total
+    male_percent.short_description = _('male %')
+
+    def female_percent(self):
+        if self.total and self.male and self.female:
+            return self.female * 100 / self.total
+    female_percent.short_description = _('female %')
 
     def __str__(self):
         return f'{self.country} - {self.year}'

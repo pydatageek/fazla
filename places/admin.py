@@ -4,9 +4,11 @@ from django.utils.translation import gettext_lazy as _
 from import_export.admin import ImportExportModelAdmin
 
 from core.admin import BaseAdmin
-from .models import Continent, Country, World
+from .models import (
+    Continent, Country, Region, World,
+    CountryAlphabet, CountryCurrency, CountryLanguage)
 from .resources import (
-    ContinentResource, CountryResource, WorldResource)
+    ContinentResource, CountryResource, RegionResource, WorldResource)
 
 
 @admin.register(Country)
@@ -15,7 +17,7 @@ class CountryAdmin(BaseAdmin, ImportExportModelAdmin):
     resource_class = CountryResource
 
     search_fields = (
-        'name', 'iso_numeric', 'iso_3166_2')
+        'name', 'iso_numeric', 'iso2', 'iso3')
     list_display = (
         'name', 'is_independent', 'iso2', 'iso_numeric',
         'slug', 'unique_code', 'area'
@@ -32,7 +34,8 @@ class CountryAdmin(BaseAdmin, ImportExportModelAdmin):
     fieldsets = (
         (_('Base info'), {
             'fields': (
-                ('name', 'long_name'), ('code', 'slug', 'unique_code'),
+                'is_alive', ('name', 'long_name'),
+                ('code', 'slug', 'unique_code'),
                 'short_content', 'content',
                 'url_slug_chars', 'url_slug_code', 'url_slug_id',
             ),
@@ -55,7 +58,7 @@ class CountryAdmin(BaseAdmin, ImportExportModelAdmin):
         (_('Country info'), {
             'fields': (
                 ('parent', 'is_independent'), ('iso_numeric', 'iso2'),
-                ('iso3', 'iso_3166_2'),
+                ('iso3'),
                 ('e164', 'phone_code'), 'fips', 'tld', 'driving_side',
             ),
         }),
@@ -77,3 +80,27 @@ class WorldAdmin(BaseAdmin, ImportExportModelAdmin):
 class ContinentAdmin(BaseAdmin, ImportExportModelAdmin):
     """"""
     resource_class = ContinentResource
+
+
+@admin.register(Region)
+class RegionAdmin(BaseAdmin, ImportExportModelAdmin):
+    """"""
+    resource_class = RegionResource
+
+
+@admin.register(CountryAlphabet)
+class CountryAlphabetAdmin(ImportExportModelAdmin):
+    """"""
+    ordering = ('country', 'alphabet')
+
+
+@admin.register(CountryCurrency)
+class CountryCurrencyAdmin(ImportExportModelAdmin):
+    """"""
+    ordering = ('country', 'currency')
+
+
+@admin.register(CountryLanguage)
+class CountryLanguageAdmin(ImportExportModelAdmin):
+    """"""
+    ordering = ('country', 'language')

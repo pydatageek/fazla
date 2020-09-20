@@ -5,9 +5,10 @@
 {% block meta_title %}Fertility Rate in {{ title }}{% endblock %}
 
 {% block content %}
-{% if object_list %}
+
+{% if wp_chart_fertility|length > 2 %}
 <h2>
-  {{ fertility }} in 
+  {{ fertility }} (live births per woman) in 
   <a href="{% url 'country-detail' view.kwargs.country_slug %}" 
     title="About {{ title }}">
     {{ title }}
@@ -23,11 +24,11 @@
           <tr>
             <th></th>
             <th class="text-right">{% trans 'Year' %}</th>
-            <th class="text-right">{% trans 'Fertility Rate' %}</th>
+            <th class="text-right">{% trans 'Total Fertility' %}</th>
           </tr>
         </thead>
         <tbody>
-          {% for item in object_list %}
+          {% for item in population|slice:"::5" %}
           <tr>
             <td></td>
             <td class="text-right">{{ item.year }}</td>
@@ -39,7 +40,7 @@
           <tr>
             <th></th>
             <th class="text-right">{% trans 'Year' %}</th>
-            <th class="text-right">{% trans 'Fertility Rate' %}</th>
+            <th class="text-right">{% trans 'Total Fertility' %}</th>
           </tr>
         </tfoot>
       </table>
@@ -51,7 +52,8 @@
 
     {% include 'lte/stats/side-menu-country.html' %}
 
-    <canvas id="yp" height="220" width="440" style="display: block; width: 440px; height: 220px;"></canvas>
+    <div id="curve_chart" style="height: 400px"></div>
+    <div id="curve_chart2" style="height: 400px"></div>
 
   </div>
 </div>
@@ -79,7 +81,7 @@
         "targets": 0
       }],
       "paging": true,
-      "pageLength": 10,
+      "pageLength": -1,
       "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
       "lengthChange": true,
       "searching": false,
@@ -99,72 +101,82 @@
   });
 </script>
 
-<script>
-  var ctx = document.getElementById('yp').getContext('2d');
-  var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: [
-      {% for item in object_list|slice:"::5" %}
-        {{ item.year }}
-        {% if not forloop.last %},{% endif %}
-      {% endfor %}  
-      ],
-      datasets: [
-        {
-          label: 'fertility rate',
-          data: [
-          {% for item in object_list|slice:"::5" %}
-            {{ item.fertility_rate|floatformat:2 }}
-            {% if not forloop.last %},{% endif %}
-          {% endfor %} 
-          ],
+<script type="text/javascript">
+  var dArr = {{wp_chart_fertility|safe}}
+
+  google.charts.load('current', {'packages':['corechart']});
+
+  if (dArr.length > 0){
+    google.charts.setOnLoadCallback(drawChart);
+  }
+
+  function drawChart() {
+    var data = new google.visualization.DataTable();
+
+    data.addColumn('string', 'Year');
+    data.addColumn('number', 'Total fertility');
+    data.addRows(dArr);
+
+    data.sort({column: 0, desc: false});
+
+    var options = {
+      title: '{{ title }} {{ fertility }}',
+      hAxis: { 'title': '{{ year_title }}'},
+      vAxis: { 'title': '{{ fertility }}'},
+      curveType: 'function',
+      legend: { position: 'bottom' },
+      animation: {
+        startup: true,
+        duration: 1000,
+        easing: 'out',
+      },
+      height: 400, 
+      width: '100%',
+    };
+    
+    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+    chart.draw(data, options);
+  }
+</script>
+
+<script type="text/javascript">
+  var dArrFuture = {{wp_future_chart_fertility|safe}}
+
+  // google.charts.load('current', {'packages':['corechart']});
+
+  if (dArrFuture.length > 0){
+    google.charts.setOnLoadCallback(drawChart2);
+  }
   
-          backgroundColor: window.chartColors.blue,
-          borderColor: window.chartColors.blue,
-          borderWidth: 1,
-          fill: false,
-        },
-      ],  
-      options: {
-        responsive: true,
-        scales: {
-          xAxes: [{
-            gridLines: {
-              display: false,
-              drawBorder: true,
-              drawOnChartArea: false,
-              drawTicks: false,
-            },
-          }],
-          yAxes: [{
-            gridLines: {
-              display: false,
-              drawBorder: true,
-              drawOnChartArea: false,
-              drawTicks: false,
-            },
-            ticks: {
-              stepSize: 5,
-              beginAtZero: false,
-              callback:  
-                function(value) {
-                  return  value.toLocaleString(); 
-                }
-            }
-          }]
-        },
-        layout: {
-          padding: {
-            left: 50,
-            right: 0,
-            top: 0,
-            bottom: 0
-          }
-        },
-      }
-    },
-  });
+  function drawChart2() {
+    var data2 = new google.visualization.DataTable();
+
+    data2.addColumn('string', 'Year');
+    data2.addColumn('number', 'Total fertility');
+    data2.addRows(dArrFuture);
+
+    data2.sort({column: 0, desc: false});
+
+    var options = {
+      title: '{{ title }} {{ fertility }} Future Projection',
+      hAxis: { 'title': '{{ year_title }}'},
+      vAxis: { 'title': '{{ fertility }}'},
+      curveType: 'function',
+      legend: { position: 'bottom' },
+      animation: {
+        startup: true,
+        duration: 1000,
+        easing: 'out',
+      },
+      height: 400, 
+      width: '100%',
+    };
+    
+    var chart2 = new google.visualization.LineChart(document.getElementById('curve_chart2'));
+
+    chart2.draw(data2, options);
+  }
 </script>
 
 {% endblock %}

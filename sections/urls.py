@@ -1,15 +1,18 @@
 from django.urls import path
 from django.views.generic import RedirectView
 
-from .views import (
-    HomeView,
+from info.views import InfoDetailView, InfoTemplateView, InfoListView
+from places.views import (
     CountryDetailView, CountryListView,
     ContinentDetailView, ContinentListView,
     WorldDetailView,
-    InfoDetailView, InfoTemplateView, InfoListView,
+)
+from stats.views import (
     CountryPopulationDetailView,
     InternationalOrganizationPopulationDetailView,
-    WorldPopulationDetailView)
+    WorldPopulationDetailView
+)
+from .views import HomeView
 
 template_base = 'lte/'
 
@@ -21,6 +24,9 @@ urlpatterns = [
     path('i/international-phone-codes/', InfoTemplateView.as_view(
         template_name=template_base+'info/'+'phone-code-detail.html'
     ), name='phone-code-list'),
+    path('i/world-capital-cities/', InfoTemplateView.as_view(
+        template_name=template_base+'info/'+'capital-city-list.html'
+    ), name='capital-city-list'),
     path('i/country-codes-iso-un-fips/', InfoTemplateView.as_view(
         template_name=template_base+'info/'+'country-code-detail.html'
     ), name='country-code-list'),
@@ -33,6 +39,12 @@ urlpatterns = [
     path('i/international-top-level-domains-tlds/', InfoTemplateView.as_view(
         template_name=template_base+'info/'+'country-tld-detail.html'
     ), name='country-tld-list'),
+    path('i/country-languages-alphabets/', InfoTemplateView.as_view(
+        template_name=template_base+'info/'+'country-language-list.html'
+    ), name='country-language-list'),
+    path('i/country-currencies/', InfoTemplateView.as_view(
+        template_name=template_base+'info/'+'country-currency-list.html'
+    ), name='country-currency-list'),
     path('i/<slug:slug>/', InfoDetailView.as_view(
         template_name=template_base+'info/'+'info-detail.html'
     ), name='info-detail'),
@@ -66,7 +78,6 @@ urlpatterns = [
     ), name='world-detail'),
 
 
-
     path('<str:country_slug>/population/growth-rate/',
          CountryPopulationDetailView.as_view(
              template_name=template_base+'stats/'+'country-growth-rate-detail.html'
@@ -91,22 +102,6 @@ urlpatterns = [
          CountryDetailView.as_view(
              template_name=template_base+'places/'+'country-detail.html'
          ), name='country-detail'),
-
-    # path('o/<str:organization_slug>/population/',
-    #      InternationalOrganizationPopulationDetailView.as_view(
-    #          template_name=template_base+'stats/'+'organization-population-detail.html'
-    #      ), name='organization-population-detail'),
-
-
-
-    # path('r/c/<slug:slug>/',
-    #      ContinentDetailView.as_view(
-    #          template_name=template_base+'places/'+'continent-detail.html'
-    #      ), name='continent-detail'),
-    # path('r/c/',
-    #      ContinentListView.as_view(
-    #          template_name=template_base+'places/'+'continent-list.html'
-    #      ), name='continent-list'),
 
 
     path('', RedirectView.as_view(
