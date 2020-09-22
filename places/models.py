@@ -96,8 +96,6 @@ class Place(SeoBaseContentStampedModel):
         unique_together = ('name', 'place_type')
 
     def save(self, *args, **kwargs):
-        if not self.meta_title:
-            self.meta_title = f'{self.name}'
 
         if not self.area:
             self.area = self.land_area + self.water_area
@@ -215,7 +213,7 @@ class Country(Place):
         ordering = ('id',)
 
     def get_absolute_url(self):
-        return reverse('country-detail', args=['self.slug'])
+        return reverse('country-detail', args=[self.slug])
 
     def save(self, *args, **kwargs):
         # self.is_independent = False if self.parent else True

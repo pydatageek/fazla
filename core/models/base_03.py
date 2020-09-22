@@ -51,6 +51,13 @@ class SeoBaseContentStampedModel(SeoBaseStampedModel, ContentModel):
     class Meta:
         abstract = True
 
+    def save(self, *args, **kwargs):
+
+        if not self.meta_description:
+            self.meta_description = f'{self.short_content}'
+
+        super().save(*args, **kwargs)
+
 
 class Item(models.Model):
     """"""

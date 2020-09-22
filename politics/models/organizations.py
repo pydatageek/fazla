@@ -39,12 +39,6 @@ class Organization(SeoBaseContentStampedModel):
         # verbose_name = _('Organization')
         # verbose_name_plural = _('Organizations')
 
-    def save(self, *args, **kwargs):
-        if not self.meta_title:
-            self.meta_title = f'{self.name}'
-
-        super().save(*args, **kwargs)
-
 
 class InternationalOrganization(Organization):
     """"""

@@ -1,0 +1,50 @@
+{% extends 'lte/core/base.html' %}
+{% load static i18n humanize imagekit %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center">
+  <div class="col-md-10 col-12">
+    <div class="container row">
+      <p>
+        Sources used for <a href="{% url 'home' %}">fazla.net</a> is listed below. 
+        For more information about the source, please click its link.
+      </p>
+      <ul>
+        <li>
+          <a name="pop"></a>
+          <strong>Population</strong>
+          <ul>
+            <li> 
+              <a href="https://population.un.org/wpp/" target="_blank">
+                United Nations Department of Economic and Social Affairs</a>, <br> 
+              World Population Projection, 2019 (retrieved in September 2020)
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a name="gdp"></a>
+          <strong>GDP</strong>
+          <ul>
+            <li>
+              <a href="https://databank.worldbank.org/" target="_blank">
+                World Bank DataBank</a>, <br>
+                World Development Indicators, 2019 (retrieved in September 2020)
+            </li> 
+          </ul>
+        </li>
+        <li>
+          <a name="info"></a>
+          <strong>Info</strong>
+          <ul>
+            <li>Country surface areas: 
+              <a name="country-area" href="https://www.cia.gov/library/publications/the-world-factbook/rankorder/2147rank.html" target="_blank">
+                CIA The World Fact Book
+              </a> (retrieved in September 2020)
+            </li> 
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

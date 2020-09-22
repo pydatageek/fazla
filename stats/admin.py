@@ -4,10 +4,12 @@ from import_export.admin import ImportExportModelAdmin
 
 from .models import (
     CountryPopulation, WorldPopulation,
-    InternationalOrganizationPopulation)
+    CountryGdp, WorldGdp
+)
 from .resources import (
     CountryPopulationResource, WorldPopulationResource,
-    InternationalOrganizationPopulationResource)
+    CountryGdpResource, WorldGdpResource
+)
 
 
 @admin.register(CountryPopulation)
@@ -29,11 +31,23 @@ class WorldPopulationAdmin(ImportExportModelAdmin):
                     'density', 'fertility_rate')
 
 
-@admin.register(InternationalOrganizationPopulation)
-class InternationalOrganizationPopulationAdmin(ImportExportModelAdmin):
+@admin.register(CountryGdp)
+class CountryGdpAdmin(ImportExportModelAdmin):
     """"""
-    resource_class = InternationalOrganizationPopulationResource
+    resource_class = CountryGdpResource
 
-    search_fields = ('organization__name', 'year')
-    list_display = ('organization', 'year', 'total', 'change_rate',
-                    'median_age', 'density', 'fertility_rate')
+    search_fields = ('country__name', 'year')
+    list_display = (
+        'country', 'year',
+        'gdp_current', 'gdp_percapita_current')
+
+
+@admin.register(WorldGdp)
+class WorldGdpAdmin(ImportExportModelAdmin):
+    """"""
+    resource_class = WorldGdpResource
+
+    search_fields = ('year',)
+    list_display = (
+        'year',
+        'gdp_current', 'gdp_percapita_current')

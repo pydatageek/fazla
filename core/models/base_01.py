@@ -9,6 +9,7 @@ from django.utils.functional import cached_property
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
+from ckeditor.fields import RichTextField
 from crum import get_current_user
 
 from ..utils import random_chars
@@ -115,7 +116,7 @@ class ContentModel(models.Model):
     short_content = models.TextField(
         _('short content'), max_length=250, default='', blank=True,
         help_text=_('you can give short information.'))
-    content = models.TextField(
+    content = RichTextField(
         _('content'), default='', blank=True)
 
     class Meta:

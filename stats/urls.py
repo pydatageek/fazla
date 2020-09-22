@@ -3,7 +3,6 @@ from django.views.generic import RedirectView
 
 from .views import (
     CountryPopulationDetailView,
-    InternationalOrganizationPopulationDetailView,
     WorldPopulationDetailView)
 
 template_base = 'lte/'

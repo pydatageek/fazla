@@ -34,8 +34,8 @@
         <th class="text-right">{% trans 'Total' %}</th>
         <th class="text-right">{% trans 'Female' %}</th>
         <th class="text-right">{% trans 'Male' %}</th>
-        <th class="text-right">{% trans 'Change %' %}</th>
-        <th class="text-right">{% trans 'Change' %}</th>
+        <th class="text-right">{% trans 'Growth %' %}</th>
+        <th class="text-right">{% trans 'Growth' %}</th>
         <th class="text-right">{% trans 'Total Fertility' %}</th>
         <th class="text-right">{% trans 'Median Age' %}</th>
         <th class="text-right">{% trans 'Density' %} <small> (p/km2)</small></th>
@@ -77,12 +77,12 @@
 
 <div class="mt-5">
   <a name="countries"></a>
-  <h2>World Population by Countries ({{ year }})</h2>
+  <h2>{{ title }} Population by Countries ({{ year }})</h2>
 
   <div class="card-body">
     <p>{{ description }}</p>
     <table id="list2" class="table table-hover dataTable display">
-      <caption>{{ title }} Yearly Population: Female, Male, Density, Fertility Rate, Median Age</caption>
+      <caption>Countries Population: Female, Male, Density, Fertility Rate, Median Age</caption>
       <thead>
         <tr>
           <th></th>
@@ -107,7 +107,9 @@
               {{ item.country.name }}
             </a>
           </td>
-          <td class="text-right">{{ item.total|intcomma }}</td>
+          <td class="text-right" data-order="{{ item.total }}" 
+            title="{{ item.total|intword }}">
+          {{ item.total|intcomma }}</td>
           <td class="text-right">{{ item.female|intcomma }}</td>
           <td class="text-right">{{ item.male|intcomma }}</td>
           <td class="text-right">
@@ -141,7 +143,7 @@
 
 <div class="col-sm-8 col-12 mt-5">
   <a name="future"></a>
-  <h2>World Population Future Projection</h2>
+  <h2>{{ title }} Population Future Projection</h2>
 
   <div id="curve_chart2" style="height: 400px"></div>
 </div>

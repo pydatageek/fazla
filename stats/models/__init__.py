@@ -1,3 +1,4 @@
+from .gdp import (
+    CountryGdp, WorldGdp,)
 from .populations import (
-    CountryPopulation, WorldPopulation,
-    InternationalOrganizationPopulation)
+    CountryPopulation, WorldPopulation)

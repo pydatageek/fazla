@@ -7,6 +7,8 @@ from core.models import SeoBaseContentStampedModel, Item
 
 class Source(SeoBaseContentStampedModel):
     """"""
+    parent_text = models.CharField(
+        max_length=100, default='', blank=True)
     url = models.URLField(
         _('url'), default='', blank=True)
 
@@ -18,12 +20,6 @@ class Source(SeoBaseContentStampedModel):
     class Meta:
         verbose_name = _('Source')
         verbose_name_plural = _('Sources')
-
-    def save(self, *args, **kwargs):
-        if not self.meta_title:
-            self.meta_title = f'{self.name}'
-
-        super().save(*args, **kwargs)
 
 # class Unit(NameSlugModel, ContentModel):
 #     """"""

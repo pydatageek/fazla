@@ -3,7 +3,13 @@
 {% block content %}{% endblock content %}
 {% block source %}
   Source: 
-  <a href="https://population.un.org/wpp/" target="_blank">
+  {% if stats_type == 'gdp' %}
+    <a href="{% url 'source-page' %}#gdp">
+      World Bank DataBank 
+    </a>, World Development Indicators, 2019 (retrieved in September 2020)
+  {% elif stats_type == 'pop' %}
+  <a href="{% url 'source-page' %}#pop">
     United Nations Department of Economic and Social Affairs 
   </a>, World Population Projection, 2019 (retrieved in September 2020)
+  {% endif %}
 {% endblock source %}

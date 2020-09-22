@@ -3,13 +3,13 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from core.models import Item
+from core.models import Item, StampedModel
 from places.models import Country
 from politics.models import InternationalOrganization
 from sources.models import Source
 
 
-class Population(models.Model):
+class Population(StampedModel):
     """"""
     year = models.SmallIntegerField(
         _('year'))
@@ -63,7 +63,10 @@ class WorldPopulation(Population):
     class Meta:
         unique_together = ('year', 'source')
         verbose_name = _('World Population')
-        verbose_name_plural = _('World Populations')
+        verbose_name_plural = _('World Population')
+
+    def get_absolute_url(self):
+        return reverse('world-population-detail')
 
 
 class InternationalOrganizationPopulation(Population):
@@ -132,6 +135,10 @@ class CountryPopulation(Population):
         unique_together = ('country', 'year', 'source')
         verbose_name = _('Country Population')
         verbose_name_plural = _('Country Populations')
+
+    def get_absolute_url(self):
+        return reverse(
+            'country-population-detail', args=[self.country.slug])
 
     # def get_absolute_url(self, *args, **kwargs):
     #     # return reverse('country-population-detail', kwargs={

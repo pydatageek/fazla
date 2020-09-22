@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
 
+    'crispy_forms',  # for beautiful forms
     'crum',  # to get current_user on model save
     'rest_framework',
     'import_export',
@@ -259,6 +260,7 @@ SITE_ID = 1
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 40000
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'  # for beautiful forms, crispy_forms
 
 # for compression
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -283,6 +285,15 @@ COMPRESS_FILTERS = {
         "compressor.filters.cssmin.rCSSMinFilter",
     ],
     "js": ["compressor.filters.jsmin.JSMinFilter"],
+}
+
+CACHES = {
+    'default': {
+        # database cache
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'TIMEOUT': 3600,
+        'LOCATION': 'fn_cache_table',
+    }
 }
 
 """

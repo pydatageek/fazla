@@ -105,7 +105,7 @@
   google.charts.setOnLoadCallback(drawChart);
 
   function drawChart() {
-    var data = google.visualization.arrayToDataTable({{ wp_chart_median_age|safe }});
+    var data = google.visualization.arrayToDataTable({{ pop_chart_median_age|safe }});
 
     data.sort({column: 0, desc: false});
 
@@ -135,7 +135,7 @@
   google.charts.setOnLoadCallback(drawChart);
 
   function drawChart() {
-    var data2 = google.visualization.arrayToDataTable({{ wp_future_chart_median_age|safe }});
+    var data2 = google.visualization.arrayToDataTable({{ pop_future_chart_median_age|safe }});
 
     data2.sort({column: 0, desc: false});
 

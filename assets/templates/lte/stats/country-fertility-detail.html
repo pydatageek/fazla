@@ -6,7 +6,7 @@
 
 {% block content %}
 
-{% if wp_chart_fertility|length > 2 %}
+{% if pop_chart_fertility|length > 2 %}
 <h2>
   {{ fertility }} (live births per woman) in 
   <a href="{% url 'country-detail' view.kwargs.country_slug %}" 
@@ -102,7 +102,7 @@
 </script>
 
 <script type="text/javascript">
-  var dArr = {{wp_chart_fertility|safe}}
+  var dArr = {{pop_chart_fertility|safe}}
 
   google.charts.load('current', {'packages':['corechart']});
 
@@ -141,7 +141,7 @@
 </script>
 
 <script type="text/javascript">
-  var dArrFuture = {{wp_future_chart_fertility|safe}}
+  var dArrFuture = {{pop_future_chart_fertility|safe}}
 
   // google.charts.load('current', {'packages':['corechart']});
 

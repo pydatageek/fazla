@@ -53,6 +53,45 @@
           </li>
         </ul>
       </li>
+      <li>
+        <a href="{% url 'world-gdp-detail' %}">
+          World GDP
+        </a>
+        <ul>
+          <li>
+            <a href="{% url 'world-gdp-detail' %}#countries">
+              Country GDPs
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="{% url 'country-gdp-detail' view.kwargs.country_slug %}">
+          {{ title }} GDP
+        </a>
+        <ul>
+          <li>
+            <a href="{% url 'country-gdp-detail' view.kwargs.country_slug %}#per-capita">
+              {{ title }} GDP per capita
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'country-gdp-detail' view.kwargs.country_slug %}#growth">
+              {{ title }} GDP growth
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'country-gdp-detail' view.kwargs.country_slug %}#table">
+              {{ title }} GDP table
+            </a>
+          </li> 
+          <li>
+            <a href="{% url 'country-gdp-detail' view.kwargs.country_slug %}#ppp">
+              {{ title }} GDP PPP
+            </a>
+          </li>        
+        </ul>
+      </li>
       
     </ul>
   </div>

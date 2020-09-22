@@ -10,11 +10,11 @@ from django.utils.translation import gettext_lazy as _
 from django.views.defaults import server_error
 from django.views.generic import DetailView, ListView, TemplateView
 
-from core.choices import titles
+from core.choices import titles, current_year, current_year_gdp
 from economics.models import Currency
 from linguistics.models import Alphabet, Language
 from stats.models import (
-    CountryPopulation, WorldPopulation)
+    CountryPopulation, WorldPopulation, CountryGdp, WorldGdp)
 from .models import Continent, Country, World
 
 
@@ -54,7 +54,9 @@ class CountryDetailView(DetailView):
         context['title'] = self.object.name
         context['title_page_prefix'] = _('Country')
         context['population'] = CountryPopulation.objects.filter(
-            country__slug=self.kwargs['slug'], year=2020).first()
+            country__slug=self.kwargs['slug'], year=current_year).first()
+        context['gdp'] = CountryGdp.objects.filter(
+            country__slug=self.kwargs['slug'], year=current_year_gdp).first()
         return context
 
 
@@ -66,7 +68,8 @@ class WorldDetailView(TemplateView):
         context['title'] = _('World')
         context['world'] = World.objects.all().first()
         context['population'] = WorldPopulation.objects.filter(
-            year=2020).first()
+            year=current_year).first()
+        context['gdp'] = WorldGdp.objects.filter(year=current_year_gdp).first()
         return context
 
 

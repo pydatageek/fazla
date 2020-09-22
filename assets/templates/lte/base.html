@@ -32,6 +32,7 @@
       href="{% static 'lte/plugins/fontawesome-free/css/all.min.css' %}">
 
   {% compress css %}      
+
     {% block extra_plugin_style %}{% endblock %}
 
     <!-- Theme style -->
@@ -57,7 +58,7 @@
   {% endif %}
   {% block meta_title %}{{ title }}{% endblock %}
   {% if title_page_suffix %} 
-    {% block meta_title_page_suffix %}{{ title_page_suffix }}: {% endblock %}
+    {% block meta_title_page_suffix %}{{ title_page_suffix }} {% endblock %}
   {% endif %}
   {% if request.path != '/' %} | {% trans 'Fazla.NET' %}{% endif %}
   </title>
@@ -87,7 +88,7 @@
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6">
+          <div class="col-sm-12">
             <h1>{% if title_page_prefix %}
               <small><i>
                 {% block title_page_prefix %}
@@ -103,21 +104,28 @@
               </small>
             </h1>
           </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"></li>
-            </ol>
-          </div>
         </div>
       </div><!-- /.container-fluid -->
     </section>
 
     <!-- Main content -->
     <section class="content">
-
       <!-- Default box -->
       <div class="card">
         <div class="card-body">
+          {% if messages %}
+          <div 
+            class="alert alert-success alert-dismissible fade show message" 
+            role="alert">
+            {% for message in messages %}
+              {{ message }}<br>
+            {% endfor %}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% endif %}
+          
           {% block content %}{% endblock content %}
         </div>
         <div class="card-body">

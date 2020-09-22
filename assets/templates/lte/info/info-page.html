@@ -1,0 +1,117 @@
+{% extends 'lte/info/base-list.html' %}
+{% load static i18n humanize imagekit %}
+
+{% block meta_title_page_prefix %}{{ title_page_prefix }}: {% endblock %}
+{% block meta_title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="row">
+
+  <div class="col-sm-7 col-12">
+
+    <div class="card-body">
+      <p>{{ description }}</p>
+
+      <table id="list" class="table table-hover dataTable display">
+        <caption>{{ title }} List: Water area, Land area, World ratio of the area</caption>
+        <thead>
+          <tr>
+            <th></th>
+            <th>{% trans 'Country' %}</th>
+            <th class="text-right">{% trans 'Area (km2)' %}</th>
+            <th class="text-right">{% trans 'World Rate %' %}</th>
+            <th class="text-right">{% trans 'Water area' %}</th>
+            <th class="text-right">{% trans 'Land area' %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in object_list %}
+          <tr>
+            <td></td>
+            <td>
+              <a href="{% url 'country-detail' item.slug %}">
+                {{ item.name }}</a> 
+            </td>
+            <td class="text-right">
+              {% if item.area < 50 %}
+                {{ item.area|floatformat:2|intcomma }}
+              {% else %}
+                {{ item.area|floatformat:0|intcomma }}
+              {% endif %}
+            </td>
+            <td class="text-right">
+              {{ item.area_rate|floatformat:2 }}
+            </td>
+            <td class="text-right">
+              {% if item.water_area < 50 %}
+                {{ item.water_area|floatformat:2|intcomma }}
+              {% else %}
+                {{ item.water_area|floatformat:0|intcomma }}
+              {% endif %}
+            </td>
+            <td class="text-right">
+              {% if item.land_area < 50 %}
+                {{ item.land_area|floatformat:2|intcomma }}
+              {% else %}
+                {{ item.land_area|floatformat:0|intcomma }}
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <th></th>
+            <th>{% trans 'Name' %}</th>
+            <th>{% trans 'Water area' %}</th>
+            <th>{% trans 'Land area' %}</th>
+            <th>{% trans 'Area (km2)' %}</th>
+            <th>{% trans 'World Rate %' %}</th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <!-- /.card-body -->
+  </div>
+
+  <div class="col-sm-5 col-12">
+    {% include 'lte/info/side-menu.html' %}
+  </div>  
+
+</div>
+{% endblock %}
+
+{% block extra_script %}
+
+<script>
+$(document).ready(function(){
+  $(function () {
+    var t = $('#list').DataTable({
+      "columnDefs": [{
+        "searchable": false,
+        "orderable": false,
+        "targets": 0
+      }],
+      "paging": true,
+      "pageLength": -1,
+      "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "order": [[2, 'desc']],
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+      "fixedHeader": true,
+    });
+
+    t.on('order.dt search.dt', function () {
+        t.column(0, {search:'applied', order:'applied'}).nodes().each(function (cell, i) {
+            cell.innerHTML = i+1;
+        });
+    }).draw();
+  });
+});  
+</script>
+
+{% endblock %}

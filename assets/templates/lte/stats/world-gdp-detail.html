@@ -1,0 +1,450 @@
+{% extends 'lte/stats/base-list.html' %}
+{% load static i18n humanize imagekit %}
+
+{% block content %}
+<a name="yearly"></a>
+<h2>Yearly Gross Domestic Product (GDP) of the 
+  <a href="{% url 'world-detail' %}" 
+    title="About {{ title }}">
+    {{ title }}
+  </a>
+</h2>
+<div class="row">
+
+  <div class="col-sm-8 col-12">
+    <p>
+      GDP stands for Gross Domestic Product which is the measurement of value added products and services within a country within a period of time. World GDP is the total of all countries' GDPs.
+    </p>
+    <div id="curve_chart" style="height: 400px"></div>
+
+    <a name="per-capita"></a>
+    <h3 class="mt-5">{{ title }} GDP per capita</h3>
+    <div id="curve_chart2" style="height: 400px"></div>
+  </div>
+
+  <div class="col-sm-4 col-12">
+    
+    {% include 'lte/stats/side-menu-world.html' %}
+
+  </div> 
+
+</div>
+
+<a name="growth"></a>
+<h2 class="mt-5">{{ title }} GDP Growth</h2>
+<div class="row">
+  <div class="col-sm-6 col-12">
+    <div id="curve_chart3" style="height: 400px"></div>
+  </div>
+  <div class="col-sm-6 col-12">
+    <div id="curve_chart4" style="height: 400px"></div>
+  </div>
+</div>
+
+<a name="table"></a>
+<div class="card-body mt-3">
+  <h2 class="mt-5">{{ title }} GDP Table</h2>
+  <p>{{ description }}</p>
+  <table id="list" class="table table-hover dataTable display">
+    <caption>
+      {{ title }} Yearly GDP: GDP, GDP per capita, GDP PPP, GDP PPP per capita
+    </caption>
+    <thead>
+      <tr>
+        <th></th>
+        <th class="text-right">{% trans 'Year' %}</th>
+        <th class="text-right">{% trans 'GDP <small>(current $US)</small>' %}</th>
+        <th class="text-right">{% trans 'Growth %' %}</th>
+        <th class="text-right">{% trans 'GDP <small>per capita</small>' %}</th>
+        <th class="text-right">{% trans 'Growth % <small>per capita</small>' %}</th>
+        <th class="text-right">{% trans 'GDP PPP <small>(international $)</small>' %}</th>
+        <th class="text-right">{% trans 'GDP PPP <small>per capita</small>' %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in gdp %}
+      <tr>
+        <td></td>
+        <td class="text-right">{{ item.year }}</td>
+        <td class="text-right" data-order="{{ item.gdp_current }}" 
+          title="{{ item.gdp_current|intcomma }}">
+          {{ item.gdp_current|intword }}</td>
+        <td class="text-right">{{ item.change_rate|floatformat:2 }}</td>
+        <td class="text-right">{{ item.gdp_percapita_current|intcomma }}</td>
+        <td class="text-right">{{ item.change_rate_percapita|floatformat:2 }}</td>
+        <td class="text-right" data-order="{{ item.gdp_ppp_current }}" 
+          title="{{ item.gdp_ppp_current|intcomma }}">
+          {{ item.gdp_ppp_current|intword }}</td>
+        <td class="text-right">{{ item.gdp_percapita_ppp_current|intcomma }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <th></th>
+        <th class="text-right">{% trans 'Year' %}</th>
+        <th class="text-right">{% trans 'GDP <small>(current $US)</small>' %}</th>
+        <th class="text-right">{% trans 'Growth %' %}</th>
+        <th class="text-right">{% trans 'GDP <small>per capita</small>' %}</th>
+        <th class="text-right">{% trans 'Growth % <small>per capita</small>' %}</th>
+        <th class="text-right">{% trans 'GDP PPP <small>(international $)</small>' %}</th>
+        <th class="text-right">{% trans 'GDP PPP <small>per capita</small>' %}</th>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+<a name="ppp"></a>
+<h2 class="mt-5">World GDP PPP and GDP PPP per capita</h2>
+<p>Purchasing power parity (PPP). For the below charts, GDP PPP is calculated with current international $.</p>
+<div class="row">
+  <div class="col-sm-6 col-12">
+    <div id="curve_chart5" style="height: 400px"></div>
+  </div>
+  <div class="col-sm-6 col-12">
+    <div id="curve_chart6" style="height: 400px"></div>
+  </div>
+</div>
+
+<div class="mt-5">
+  <a name="countries"></a>
+  <h2>World GDP by Countries ({{ year }})</h2>
+
+  <div class="card-body">
+    <p>{{ description }}</p>
+    <table id="list2" class="table table-hover dataTable display">
+      <caption>
+        Countries GDP: GDP, GDP per capita, GDP PPP, GDP PPP per capita, GDP growth
+      </caption>
+      <thead>
+        <tr>
+          <th></th>
+          <th class="text-right">{% trans 'Country' %}</th>
+          <th class="text-right">{% trans 'GDP <small>(current $US)</small>' %}</th>
+          <th class="text-right">{% trans 'Growth %' %}</th>
+          <th class="text-right">{% trans 'GDP <small>per capita</small>' %}</th>
+          <th class="text-right">{% trans 'Growth % <small>per capita</small>' %}</th>
+          <th class="text-right">{% trans 'GDP PPP <small>(international $)</small>' %}</th>
+          <th class="text-right">{% trans 'GDP PPP <small>per capita</small>' %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in countries_gdp %}
+        <tr>
+          <td></td>
+          <td class="text-right">
+            <a href="{% url 'country-gdp-detail' item.country.slug %}"
+              title="{{ item.country.name }} GDP">
+              {{ item.country.name }}
+            </a>
+          </td>
+          <td class="text-right" data-order="{{ item.gdp_current }}" 
+            title="{{ item.gdp_current|intcomma }}">
+            {{ item.gdp_current|intword }}</td>
+          <td class="text-right">{{ item.change_rate|floatformat:2 }}</td>
+          <td class="text-right">{{ item.gdp_percapita_current|intcomma }}</td>
+          <td class="text-right">{{ item.change_rate_percapita|floatformat:2 }}</td>
+          <td class="text-right" data-order="{{ item.gdp_ppp_current }}" 
+            title="{{ item.gdp_ppp_current|intcomma }}">
+            {{ item.gdp_ppp_current|intword }}</td>
+          <td class="text-right" 
+            data-order="{{ item.gdp_percapita_ppp_current }}">
+            {{ item.gdp_percapita_ppp_current|intcomma }}</td>          
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <th></th>
+          <th class="text-right">{% trans 'Country' %}</th>
+          <th class="text-right">{% trans 'GDP <small>(current $US)</small>' %}</th>
+          <th class="text-right">{% trans 'Growth %' %}</th>
+          <th class="text-right">{% trans 'GDP <small>per capita</small>' %}</th>
+          <th class="text-right">{% trans 'Growth % <small>per capita</small>' %}</th>
+          <th class="text-right">{% trans 'GDP PPP <small>(international $)</small>' %}</th>
+          <th class="text-right">{% trans 'GDP PPP <small>per capita</small>' %}</th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <!-- /.card-body -->
+</div>
+{% endblock content %}
+
+{% block extra_script %}
+
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart() {
+    var data = new google.visualization.DataTable();
+
+    data.addColumn('string', 'Year');
+    data.addColumn('number', 'GDP');
+    data.addRows({{ gdp_chart|safe }});
+
+    data.sort({column: 0, desc: false});
+
+    var options = {
+      title: '{{ title }} {{ title_page_prefix }} (current $US)',
+      hAxis: { 'title': 'Year'},
+      vAxis: { 'title': 'GDP (current $US)'},
+      curveType: 'function',
+      legend: { position: 'bottom' },
+      animation: {
+        startup: true,
+        duration: 1000,
+        easing: 'out',
+      },
+      height: 400, 
+      width: '100%',
+    };
+    
+    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+    chart.draw(data, options);
+  }
+</script>
+
+<script type="text/javascript">
+  if (document.getElementById('curve_chart2')) {
+    // google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var data2 = new google.visualization.DataTable();
+
+      data2.addColumn('string', 'Year');
+      data2.addColumn('number', 'GDP per capita');
+      data2.addRows({{ gdp_pc_chart|safe }});
+
+      data2.sort({column: 0, desc: false});
+
+      var options = {
+        title: '{{ title }} {{ title_page_prefix }} per capita (current $US)',
+        hAxis: { 'title': 'Year'},
+        vAxis: { 'title': 'GDP per capita (current $US)'},
+        curveType: 'function',
+        legend: { position: 'bottom' },
+        animation: {
+          startup: true,
+          duration: 1000,
+          easing: 'out',
+        },
+        height: 400, 
+        width: '100%',
+      };
+      
+      var chart2 = new google.visualization.LineChart(document.getElementById('curve_chart2'));
+
+      chart2.draw(data2, options);
+    }
+  }
+</script>
+
+<script type="text/javascript">
+  if (document.getElementById('curve_chart3')) {
+    // google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var data3 = new google.visualization.DataTable();
+
+      data3.addColumn('string', 'Year');
+      data3.addColumn('number', 'GDP growth (%)');
+      data3.addRows({{ gdp_chart_growth|safe }});
+
+      data3.sort({column: 0, desc: false});
+
+      var options = {
+        title: '{{ title }} {{ title_page_prefix }} growth (%)',
+        hAxis: { 'title': 'Year'},
+        vAxis: { 'title': 'GDP Growth (%)'},
+        curveType: 'function',
+        legend: { position: 'bottom' },
+        animation: {
+          startup: true,
+          duration: 1000,
+          easing: 'out',
+        },
+        height: 400, 
+        width: '100%',
+      };
+      
+      var chart3 = new google.visualization.LineChart(document.getElementById('curve_chart3'));
+
+      chart3.draw(data3, options);
+    }
+  }
+</script>
+
+<script type="text/javascript">
+  if (document.getElementById('curve_chart4')) {
+    // google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var data4 = new google.visualization.DataTable();
+
+      data4.addColumn('string', 'Year');
+      data4.addColumn('number', 'GDP per capita growth (%)');
+      data4.addRows({{ gdp_pc_chart_growth|safe }});
+
+      data4.sort({column: 0, desc: false});
+
+      var options = {
+        title: '{{ title }} {{ title_page_prefix }} per capita growth (%)',
+        hAxis: { 'title': 'Year'},
+        vAxis: { 'title': 'GDP per capita Growth (%)'},
+        curveType: 'function',
+        legend: { position: 'bottom' },
+        animation: {
+          startup: true,
+          duration: 1000,
+          easing: 'out',
+        },
+        height: 400, 
+        width: '100%',
+      };
+      
+      var chart4 = new google.visualization.LineChart(document.getElementById('curve_chart4'));
+
+      chart4.draw(data4, options);
+    }
+  }
+</script>
+
+<script type="text/javascript">
+  if (document.getElementById('curve_chart5')) {
+    // google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var data5 = new google.visualization.DataTable();
+
+      data5.addColumn('string', 'Year');
+      data5.addColumn('number', 'GDP PPP');
+      data5.addRows({{ gdp_chart_ppp|safe }});
+
+      data5.sort({column: 0, desc: false});
+
+      var options = {
+        title: '{{ title }} {{ title_page_prefix }} PPP (current international $)',
+        hAxis: { 'title': 'Year'},
+        vAxis: { 'title': 'GDP PPP'},
+        curveType: 'function',
+        legend: { position: 'bottom' },
+        animation: {
+          startup: true,
+          duration: 1000,
+          easing: 'out',
+        },
+        height: 400, 
+        width: '100%',
+      };
+      
+      var chart5 = new google.visualization.LineChart(document.getElementById('curve_chart5'));
+
+      chart5.draw(data5, options);
+    }
+  }
+</script>
+
+<script type="text/javascript">
+  if (document.getElementById('curve_chart6')) {
+    // google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart6);
+
+    function drawChart6() {
+      var data6 = new google.visualization.DataTable();
+
+      data6.addColumn('string', 'Year');
+      data6.addColumn('number', 'GDP PPP per capita');
+      data6.addRows({{ gdp_pc_chart_ppp|safe }});
+
+      data6.sort({column: 0, desc: false});
+
+      var options = {
+        title: '{{ title }} {{ title_page_prefix }} PPP per capita (current international $)',
+        hAxis: { 'title': 'Year'},
+        vAxis: { 'title': 'GDP PPP per capita'},
+        curveType: 'function',
+        legend: { position: 'bottom' },
+        animation: {
+          startup: true,
+          duration: 1000,
+          easing: 'out',
+        },
+        height: 400, 
+        width: '100%',
+      };
+      
+      var chart6 = new google.visualization.LineChart(document.getElementById('curve_chart6'));
+
+      chart6.draw(data6, options);
+    }
+  }
+</script>
+
+<script>
+  $(function () {
+    var t = $('#list').DataTable({
+      "columnDefs": [
+        {
+        "searchable": false,
+        "orderable": false,
+        "targets": 0
+       },
+      ],
+      "paging": true,
+      "pageLength": 10,
+      "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "order": [[1, 'desc']],
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+      "fixedHeader": true,
+    });
+
+    t.on( 'order.dt search.dt', function () {
+        t.column(0, {search:'applied', order:'applied'}).nodes().each(function (cell, i) {
+            cell.innerHTML = i+1;
+        });
+    }).draw();
+  });
+  $(function () {
+    var t = $('#list2').DataTable({
+      "columnDefs": [
+        {
+          "searchable": false,
+          "orderable": false,
+          "targets": 0
+        },
+      ],
+      "paging": true,
+      "pageLength": -1,
+      "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "order": [[2, 'desc']],
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+      "fixedHeader": true,
+      "serverSide": false,
+    });
+
+    t.on( 'order.dt search.dt', function () {
+        t.column(0, {search:'applied', order:'applied'}).nodes().each(function (cell, i) {
+            cell.innerHTML = i+1;
+        });
+    }).draw();
+  });  
+</script>
+
+{% endblock %}

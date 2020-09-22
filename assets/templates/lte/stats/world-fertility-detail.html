@@ -5,7 +5,7 @@
 {% block meta_title %}Fertility Rate in the World{% endblock %}
 
 {% block content %}
-{% if wp_chart_fertility %}
+{% if pop_chart_fertility %}
 <h2>
   {{ fertility }} (live births per woman) in the 
   <a href="{% url 'world-detail' %}" 
@@ -105,7 +105,7 @@
   google.charts.setOnLoadCallback(drawChart);
 
   function drawChart() {
-    var data = google.visualization.arrayToDataTable({{ wp_chart_fertility|safe }});
+    var data = google.visualization.arrayToDataTable({{ pop_chart_fertility|safe }});
 
     data.sort({column: 0, desc: false});
 
@@ -135,7 +135,7 @@
   google.charts.setOnLoadCallback(drawChart);
 
   function drawChart() {
-    var data2 = google.visualization.arrayToDataTable({{ wp_future_chart_fertility|safe }});
+    var data2 = google.visualization.arrayToDataTable({{ pop_future_chart_fertility|safe }});
 
     data2.sort({column: 0, desc: false});
 

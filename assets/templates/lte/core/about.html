@@ -1,0 +1,62 @@
+{% extends 'lte/core/base.html' %}
+{% load static i18n humanize imagekit %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center">
+  <div class="col-md-10 col-12">
+    <div class="container row">
+      <p>
+        <strong>Information</strong> is arguably <em>the strongest and 
+          the most valuable</em> 'object' in the 21st century. And 
+          statistics construct a sound basis for information.
+      <br>
+        Reaching to information and statistics should be easy and one 
+        click away for an internet user. 
+      <br>
+        In order to achieve the goal of information at hand, we work 
+        hard to retrieve and present them.
+      <br>
+        More info and statistical datasets are added continuously. 
+        Added datasets for now are:
+        <ul>
+          <li>
+            <a href="{% url 'world-population-detail' %}">
+              World Population</a>, 
+            <a href="{% url 'world-population-detail' %}#countries">
+              Country Populations</a>
+          </li>
+          <li>
+            <a href="{% url 'world-gdp-detail' %}">
+              World GDP</a>, 
+            <a href="{% url 'world-gdp-detail' %}#countries">
+              Country GDPs</a>
+          </li>
+          <li>
+            Countries' 
+            <a href="{% url 'country-area-list' %}">surface areas</a>, 
+            <a href="{% url 'phone-code-list' %}">phone codes</a>,
+            <a href="{% url 'capital-city-list' %}">capital cities</a>,
+            <a href="{% url 'country-language-list' %}">languages and alphabets</a>,
+            <a href="{% url 'country-currency-list' %}">currencies</a>,
+            <a href="{% url 'country-tld-list' %}">top level domains (TLDs)</a>,
+            <a href="{% url 'country-code-list' %}">iso codes</a>,
+            <a href="{% url 'driving-side-list' %}">driving sides</a>
+          </li>
+        </ul>
+      </p>
+      <p>
+        If you see any thing wrong with the information or the website itself, please 
+        <a href="{% url 'contact' %}">contact us</a>. <br>
+        You can see the <a href="{% url 'source-page' %}">sources</a> here.
+      </p>
+    </div>
+    <div class="row">
+      <p>
+        <strong>
+          <a href="http://fazla.net/">Fazla.NET</a> team
+        </strong>
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

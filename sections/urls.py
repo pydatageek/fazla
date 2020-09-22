@@ -9,10 +9,10 @@ from places.views import (
 )
 from stats.views import (
     CountryPopulationDetailView,
-    InternationalOrganizationPopulationDetailView,
-    WorldPopulationDetailView
+    WorldPopulationDetailView,
+    CountryGdpDetailView, WorldGdpDetailView,
 )
-from .views import HomeView
+from .views import HomeView, AboutView, ContactView, SourceView
 
 template_base = 'lte/'
 
@@ -20,6 +20,16 @@ urlpatterns = [
     # path('country/', CountryListView.as_view(
     #     template_name=template_base+'places/'+'country-list.html'
     # ), name='country-list'),
+
+    path('about/', AboutView.as_view(
+        template_name=template_base+'core/'+'about.html'
+    ), name='about'),
+    path('contact/', ContactView.as_view(
+        template_name=template_base+'core/'+'contact.html'
+    ), name='contact'),
+    path('sources/', SourceView.as_view(
+        template_name=template_base+'core/'+'source-page.html'
+    ), name='source-page'),
 
     path('i/international-phone-codes/', InfoTemplateView.as_view(
         template_name=template_base+'info/'+'phone-code-detail.html'
@@ -53,6 +63,11 @@ urlpatterns = [
     # ), name='info-list'),
 
 
+    path('world/gdp/',
+         WorldGdpDetailView.as_view(
+             template_name=template_base+'stats/'+'world-gdp-detail.html'
+         ), name='world-gdp-detail'),
+
     path('world/population/growth-rate/',
          WorldPopulationDetailView.as_view(
              template_name=template_base+'stats/'+'world-growth-rate-detail.html'
@@ -77,6 +92,11 @@ urlpatterns = [
         template_name=template_base+'places/'+'world-detail.html'
     ), name='world-detail'),
 
+
+    path('<str:country_slug>/gdp/',
+         CountryGdpDetailView.as_view(
+             template_name=template_base+'stats/'+'country-gdp-detail.html'
+         ), name='country-gdp-detail'),
 
     path('<str:country_slug>/population/growth-rate/',
          CountryPopulationDetailView.as_view(

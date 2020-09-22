@@ -5,7 +5,7 @@
 {% block meta_title %}Population Density in {{ title }}{% endblock %}
 
 {% block content %}
-{% if wp_chart_density|length > 2 %}
+{% if pop_chart_density|length > 2 %}
 <h2>
   {{ density }} in 
   <a href="{% url 'country-detail' view.kwargs.country_slug %}" 
@@ -107,7 +107,7 @@
   google.charts.setOnLoadCallback(drawChart);
 
   function drawChart() {
-    var data = google.visualization.arrayToDataTable({{ wp_chart_density|safe }});
+    var data = google.visualization.arrayToDataTable({{ pop_chart_density|safe }});
 
     data.sort({column: 0, desc: false});
 
@@ -137,7 +137,7 @@
   google.charts.setOnLoadCallback(drawChart);
 
   function drawChart() {
-    var data2 = google.visualization.arrayToDataTable({{ wp_future_chart_density|safe }});
+    var data2 = google.visualization.arrayToDataTable({{ pop_future_chart_density|safe }});
 
     data2.sort({column: 0, desc: false});
 

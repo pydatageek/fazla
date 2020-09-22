@@ -28,7 +28,7 @@
     data.addColumn('number', 'Total population');
     data.addColumn('number', 'Female');
     data.addColumn('number', 'Male');
-    data.addRows({{ wp_chart|safe }});
+    data.addRows({{ pop_chart|safe }});
 
     data.sort({column: 0, desc: false});
 
@@ -65,7 +65,7 @@
       data2.addColumn('number', 'Total population');
       data2.addColumn('number', 'Female');
       data2.addColumn('number', 'Male');
-      data2.addRows({{ wp_future_chart|safe }});
+      data2.addRows({{ pop_future_chart|safe }});
 
       data2.sort({column: 0, desc: false});
 

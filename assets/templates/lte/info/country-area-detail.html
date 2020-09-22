@@ -7,7 +7,7 @@
 {% block content %}
 <div class="row">
 
-  <div class="col-sm-7 col-12">
+  <div class="col-sm-8 col-12">
 
     <div class="card-body">
       <p>{{ description }}</p>
@@ -74,44 +74,9 @@
     <!-- /.card-body -->
   </div>
 
-  <div class="col-sm-5 col-12">
+  <div class="col-sm-4 col-12">
     {% include 'lte/info/side-menu.html' %}
   </div>  
 
 </div>
-{% endblock %}
-
-{% block extra_script %}
-
-<script>
-$(document).ready(function(){
-  $(function () {
-    var t = $('#list').DataTable({
-      "columnDefs": [{
-        "searchable": false,
-        "orderable": false,
-        "targets": 0
-      }],
-      "paging": true,
-      "pageLength": -1,
-      "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-      "lengthChange": true,
-      "searching": true,
-      "ordering": true,
-      "order": [[2, 'desc']],
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-      "fixedHeader": true,
-    });
-
-    t.on('order.dt search.dt', function () {
-        t.column(0, {search:'applied', order:'applied'}).nodes().each(function (cell, i) {
-            cell.innerHTML = i+1;
-        });
-    }).draw();
-  });
-});  
-</script>
-
 {% endblock %}

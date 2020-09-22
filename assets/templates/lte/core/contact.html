@@ -1,0 +1,19 @@
+{% extends 'lte/core/base.html' %}
+{% load static i18n humanize imagekit crispy_forms_tags %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center">
+  <div class="col-md-10 col-12">
+    <div class="container row">
+      <p>
+        In order to contact us or report a page with false/inaccurate 
+        data, please use the contact form below. 
+      </p>
+      <form method="post">{% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" value="{% trans 'Send message' %}">
+    </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

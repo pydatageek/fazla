@@ -5,7 +5,7 @@
 {% block meta_title %}Median Age in {{ title }}{% endblock %}
 
 {% block content %}
-{% if wp_chart_median_age|length > 2 %}
+{% if pop_chart_median_age|length > 2 %}
 <h2>
   {{ median_age }} in 
   <a href="{% url 'country-detail' view.kwargs.country_slug %}" 
@@ -101,7 +101,7 @@
 </script>
 
 <script type="text/javascript">
-  var dArr = {{wp_chart_median_age|safe}}
+  var dArr = {{pop_chart_median_age|safe}}
 
   google.charts.load('current', {'packages':['corechart']});
 
@@ -140,7 +140,7 @@
 </script>
 
 <script type="text/javascript">
-  var dArrFuture = {{wp_future_chart_median_age|safe}}
+  var dArrFuture = {{pop_future_chart_median_age|safe}}
 
   // google.charts.load('current', {'packages':['corechart']});
 

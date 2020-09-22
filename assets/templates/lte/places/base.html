@@ -1,3 +1,19 @@
 {% extends 'lte/base.html' %}
 
 {% block content %}{% endblock content %}
+
+{% block source %}
+  Sources:
+  <ul> 
+    <li>
+      <a href="{% url 'source-page' %}#gdp">
+        World Bank DataBank 
+      </a>, World Development Indicators, 2019 (retrieved in September 2020)
+    </li> 
+    <li> 
+      <a href="{% url 'source-page' %}#pop">
+        United Nations Department of Economic and Social Affairs 
+      </a>, World Population Projection, 2019 (retrieved in September 2020)
+    </li>
+  </ul>
+{% endblock source %}

@@ -12,6 +12,9 @@ from linguistics.models import Alphabet, Language
 from places.models import Country
 from info.models import Info
 
+# table_caption
+# table ths and tds
+
 
 class InfoTemplateView(TemplateView):
     """"""
@@ -22,6 +25,9 @@ class InfoTemplateView(TemplateView):
 
         slug = ''
         title = ''
+
+        country_list = Country.objects.exclude(
+            Q(is_alive=False) | Q(iso2='00')).order_by('name')
 
         if (current_url == 'phone-code-list'):
             slug = 'international-phone-codes'
@@ -35,6 +41,7 @@ class InfoTemplateView(TemplateView):
         elif current_url == 'country-area-list':
             slug = 'country-surface-areas'
             title = _('Country Surface Areas')
+            country_list = country_list.order_by('-area')
         elif current_url == 'country-tld-list':
             slug = 'international-top-level-domains-tlds'
             title = _('International Top Level Domains (TLDs)')
@@ -45,27 +52,27 @@ class InfoTemplateView(TemplateView):
             slug = 'country-languages-alphabets'
             title = _(
                 'Spoken Languages and Alphabets in Each Country of the World')
+            country_list = country_list.prefetch_related(
+                Prefetch(
+                    'languages',
+                    Language.objects.only('name', 'code')),
+                Prefetch(
+                    'alphabets',
+                    Alphabet.objects.only('name', 'code')),
+            )
         elif current_url == 'country-currency-list':
             slug = 'country-currencies'
             title = _('Currencies by Countries')
+            country_list = country_list.prefetch_related(
+                Prefetch(
+                    'currencies',
+                    Currency.objects.only('name', 'iso3')),
+            )
         else:
             slug = ''
 
         # country_list = Country.objects.exclude(
         #     Q(is_alive=False) | Q(iso2='00'))
-
-        country_list = Country.objects.exclude(
-            Q(is_alive=False) | Q(iso2='00')).prefetch_related(
-            Prefetch(
-                'currencies',
-                Currency.objects.only('name', 'iso3')),
-            Prefetch(
-                'languages',
-                Language.objects.only('name', 'code')),
-            Prefetch(
-                'alphabets',
-                Alphabet.objects.only('name', 'code')),
-        )
 
         driving_chart = [
             [
@@ -80,7 +87,7 @@ class InfoTemplateView(TemplateView):
                  }, item.get_driving_side_display()
             ])
 
-        context['object'] = Info.objects.filter(slug=slug).first()
+        # context['object'] = Info.objects.filter(slug=slug).first()
         context['object_list'] = country_list
         context['title'] = title
         context['title_page_prefix'] = _('Info')

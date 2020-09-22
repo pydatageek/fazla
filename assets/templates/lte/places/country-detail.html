@@ -9,20 +9,22 @@
       <h5>
         <i class="icon fas fa-info"></i> 
         <strong>{{ object.name }}</strong> 
-          {% if object.name != object.long_name %}
+          {% if object.long_name %}
           (<em>{{ object.long_name }}</em>)
           {% endif %}
-        is a {{ object.get_is_independent_display }}. 
-      </h5>
-      {% if object.is_independent in '0, 3, 4, 5' and object.parent %}
-        {{ object.name }} has dependency to 
+        is a {{ object.get_is_independent_display }} 
+      
+      {% if object.parent %}
+        and has dependency to 
         <a href="{% url 'country-detail' object.parent.slug %}">
           {{ object.parent }}</a>
       {% endif %}
+      .</h5>
+
       <p>
         <a href="{% url 'capital-city-list' %}" 
           title="{% trans 'Capital cities in the world' %}">
-          Capital city</a> of the country is <em>{{ object.capital_text }}</em>.
+          Capital city</a> of {{ object.name }} is <em>{{ object.capital_text }}</em>.
       </p>
     </div>
 
@@ -30,7 +32,217 @@
 
       <div class="{% if population %}col-md-6{% else %}col-12{% endif %}">
 
-        <div class="info-box bg-warning">
+        <a href="{% url 'country-gdp-detail' object.slug %}" 
+          title="{{ object.name }} GDP">
+          <!-- small card -->
+          <div class="small-box bg-success">
+            <div class="inner">
+              <h4>
+                <strong>${{ gdp.gdp_current|intcomma }}</strong>
+              </h4>
+              <p>Gross Domestic Product (GDP): 
+                ${{ gdp.gdp_current|intword }}</p>
+              <h4>
+                <strong>${{ gdp.gdp_percapita_current|intcomma }}</strong>
+              </h4>
+              <p>GDP per capita</p>
+              <hr>
+              <h4>
+                <strong>${{ gdp.gdp_ppp_current|intcomma }}</strong>
+              </h4>
+              <p>GDP PPP: 
+                ${{ gdp.gdp_ppp_current|intword }}
+              </p>
+              <h4>
+                <strong>${{ gdp.gdp_percapita_ppp_current|intcomma }}</strong>
+              </h4>
+              <p>GDP PPP per capita</p>
+            </div>
+            <div class="icon">
+              <i class="fas fa-money"></i>
+            </div>
+            <span class="small-box-footer">
+              ({{ gdp.source.code }}, {{ gdp.year }})
+            </span>
+          </div>
+        </a>
+
+        {% if object.currencies %}
+        <div class="info-box bg-info">         
+          <span class="info-box-icon">
+            <a href="{% url 'country-currency-list' %}"
+              title="Country currencies">
+              <i class="fa fa-credit-card"></i></a>
+          </span>
+        
+          <div class="info-box-content">
+            <span class="info-box-text">Currency: 
+              <strong>
+                {% for curr in object.currencies.all %}
+                  {{ curr.name }} ({{ curr.iso3 }}){% if not forloop.last %},{% endif %}
+                {% endfor %}
+              </strong>
+            </span>
+      
+            <div class="progress">
+              <div class="progress-bar" style="width: 100%"></div>
+            </div>
+            <span class="progress-description">
+            </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+        {% endif %}
+
+        <div class="info-box bg-success">
+          <span class="info-box-icon">
+            <a href="{% url 'phone-code-list' %}"
+              title="International phone codes">
+            <i class="fas fa-phone-alt"></i></a>
+          </span>
+      
+          <div class="info-box-content">
+            <span class="info-box-text">International phone code</span>
+            <span class="info-box-number">{{ object.phone_code }}</span>
+            {% if object.e164 %}
+            <div class="progress">
+              <div class="progress-bar" style="width: 100%"></div>
+            </div>
+            <span class="progress-description">
+              e164: <strong>{{ object.e164 }}</strong> 
+            </span>
+            {% endif %}
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+
+        {% if object.tld %}
+        <div class="info-box bg-info">
+          <span class="info-box-icon">
+            <a href="{% url 'country-tld-list' %}"
+              title="Top level domains (TLDs)">
+              <i class="fas fa-network-wired"></i></a>
+          </span>
+      
+          <div class="info-box-content">
+            <span class="info-box-text">Top level domain (tld)</span>
+            <span class="info-box-number">
+              .{{ object.tld }}</span>
+      
+            <div class="progress">
+              <div class="progress-bar" style="width: 100%"></div>
+            </div>
+            <span class="progress-description">
+              This TLD is country specific 
+              <br>
+            </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+        {% endif %}
+        
+        {% if object.iso2 and object.iso2|first not in '0123' %}
+        <div class="info-box bg-success">         
+          <span class="info-box-icon">
+            <a href="{% url 'country-code-list' %}"
+              title="Country codes (ISO, UN, FIPS)">
+              <i class="fas fa-code"></i></a>
+          </span>
+        
+          <div class="info-box-content">
+            <span class="info-box-text">ISO 3166-2</span>
+            <span class="info-box-number">{{ object.iso2 }}</span>
+      
+            <div class="progress">
+              <div class="progress-bar" style="width: 100%"></div>
+            </div>
+            <span class="progress-description">
+              ISO 3166-3: <strong>{{ object.iso3 }}</strong> <br>
+              ISO numeric code: <strong>{{ object.iso_numeric }}</strong> <br>
+              FIPS code: <strong>{{ object.fips }}</strong> 
+            </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+        {% endif %}
+
+        <div class="info-box bg-info">
+          <span class="info-box-icon">
+            <a href="{% url 'driving-side-list' %}"
+              title="Country driving sides">
+              <i class="fas fa-car"></i></a>
+            </span>
+      
+          <div class="info-box-content">
+            <span class="info-box-text">Driving side</span>
+            <span class="info-box-number">
+              {{ object.get_driving_side_display }}</span>
+      
+            <div class="progress">
+              <div class="progress-bar" style="width: 100%"></div>
+            </div>
+            <span class="progress-description">
+              <br>
+            </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+          
+      </div>
+
+      <div class="col-md-6">
+
+        <a href="{% url 'country-population-detail' object.slug %}" 
+          title="{{ object.name }} population">
+          <!-- small card -->
+          <div class="small-box bg-warning">
+            <div class="inner">
+              <h4>
+                <strong>{{ population.total|intcomma }}</strong>
+              </h4>
+              <p>Population: {{ population.total|intword }}</p>
+              <hr>
+              <h5><strong>{{ population.male|intcomma }}</strong></h5> 
+              <p>
+                Male Population 
+                ({{ population.male_percent|floatformat:1}} %)
+              </p>
+              <h5><strong>{{ population.female|intcomma }}</strong></h5>
+              <p>
+                Female Population 
+                ({{ population.female_percent|floatformat:1}} %)</p>
+              <hr>
+              {% if population.change %}
+              Population growth: <strong>
+                {{ population.change|intcomma }} 
+                ({{ population.change_rate|floatformat:2 }}%)
+              </strong> <br> {% endif %}
+              {% if population.median_age %}
+              Median age: <strong>
+                {{ population.median_age|floatformat:1 }} years</strong> <br> {% endif %}
+              {% if population.density %}
+              Density: <strong>
+                {{ population.density|floatformat:1 }} people/km2</strong> <br> {% endif %}
+              {% if population.fertility_rate %}
+              Total Fertility: <strong>
+                {{ population.fertility_rate|floatformat:1 }} 
+              </strong> live births per woman <br> {% endif %}
+            </div>
+            <div class="icon float-left">
+              <i class="fas fa-users"></i>
+            </div>
+            <span class="small-box-footer">
+              ({{ population.source.code }}, {{ population.year }})
+            </span>
+          </div>
+        </a>
+        
+        <div class="info-box bg-success">
           <span class="info-box-icon">
             <a href="{% url 'country-area-list' %}"
               title="Country areas">
@@ -73,36 +285,26 @@
         </div>
         <!-- /.info-box -->
 
-        {% if object.currencies %}
-        <div class="info-box bg-info">         
-          <span class="info-box-icon">
-            <a href="{% url 'country-currency-list' %}"
-              title="Country currencies">
-              <i class="fa fa-credit-card"></i></a>
-          </span>
-        
+        {% if object.latitude %}
+        <div class="info-box bg-info">     
           <div class="info-box-content">
-            <span class="info-box-text">Currency: 
-              <strong>
-                {% for curr in object.currencies.all %}
-                  {{ curr.name }} ({{ curr.iso3 }}){% if not forloop.last %},{% endif %}
-                {% endfor %}
-              </strong>
-            </span>
-      
-            <div class="progress">
-              <div class="progress-bar" style="width: 100%"></div>
-            </div>
             <span class="progress-description">
+              Coordinates: 
+              <strong>  
+                  {{ object.latitude }}
+                  {% if object.latitude > 0 %} N {% else %} S{% endif %}
+                  {{ object.longitude }}
+                  {% if object.longitude > 0 %} E {% else %} W{% endif %}
+              </strong>
             </span>
           </div>
           <!-- /.info-box-content -->
         </div>
         <!-- /.info-box -->
         {% endif %}
-
+        
         {% if object.languages or object.alphabets %}
-        <div class="info-box bg-success">         
+        <div class="info-box bg-warning">         
           <span class="info-box-icon">
             <a href="{% url 'country-language-list' %}"
               title="World languages and alphabets by countries">
@@ -130,7 +332,7 @@
               <div class="progress-bar" style="width: 100%"></div>
             </div>
             <span class="progress-description">
-              * country's official languages
+              * country's official language(s)
             </span>
           </div>
           <!-- /.info-box-content -->
@@ -138,206 +340,7 @@
         <!-- /.info-box -->
         {% endif %}
 
-        {% if object.latitude %}
-        <div class="info-box bg-info">     
-          <div class="info-box-content">
-            <span class="progress-description">
-              Coordinates: 
-              <strong>  
-                  {{ object.latitude }}
-                  {% if object.latitude > 0 %} N {% else %} S{% endif %}
-                  {{ object.longitude }}
-                  {% if object.longitude > 0 %} E {% else %} W{% endif %}
-              </strong>
-            </span>
-          </div>
-          <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-        {% endif %}
-
-        {% if object.iso2 and object.iso2|first not in '0123' %}
-        <div class="info-box bg-success">         
-          <span class="info-box-icon">
-            <a href="{% url 'country-code-list' %}"
-              title="Country codes (ISO, UN, FIPS)">
-              <i class="fas fa-code"></i></a>
-          </span>
-        
-          <div class="info-box-content">
-            <span class="info-box-text">ISO 3166-2</span>
-            <span class="info-box-number">{{ object.iso2 }}</span>
-      
-            <div class="progress">
-              <div class="progress-bar" style="width: 100%"></div>
-            </div>
-            <span class="progress-description">
-              ISO 3166-3: <strong>{{ object.iso3 }}</strong> <br>
-              ISO numeric code: <strong>{{ object.iso_numeric }}</strong> <br>
-              FIPS code: <strong>{{ object.fips }}</strong> 
-            </span>
-          </div>
-          <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-        {% endif %}
-
-        {% if object.tld %}
-        <div class="info-box bg-info">
-          <span class="info-box-icon">
-            <a href="{% url 'country-tld-list' %}"
-              title="Top level domains (TLDs)">
-              <i class="fas fa-network-wired"></i></a>
-          </span>
-      
-          <div class="info-box-content">
-            <span class="info-box-text">Top level domain (tld)</span>
-            <span class="info-box-number">
-              .{{ object.tld }}</span>
-      
-            <div class="progress">
-              <div class="progress-bar" style="width: 100%"></div>
-            </div>
-            <span class="progress-description">
-              This TLD is country specific 
-              <br>
-            </span>
-          </div>
-          <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-        {% endif %}
-
-        <div class="info-box bg-success">
-          <span class="info-box-icon">
-            <a href="{% url 'phone-code-list' %}"
-              title="International phone codes">
-            <i class="fas fa-phone-alt"></i></a>
-          </span>
-      
-          <div class="info-box-content">
-            <span class="info-box-text">International phone code</span>
-            <span class="info-box-number">{{ object.phone_code }}</span>
-            {% if object.e164 %}
-            <div class="progress">
-              <div class="progress-bar" style="width: 100%"></div>
-            </div>
-            <span class="progress-description">
-              e164: <strong>{{ object.e164 }}</strong> 
-            </span>
-            {% endif %}
-          </div>
-          <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-
-        <div class="info-box bg-info">
-          <span class="info-box-icon">
-            <a href="{% url 'driving-side-list' %}"
-              title="Country driving sides">
-              <i class="fas fa-car"></i></a>
-            </span>
-      
-          <div class="info-box-content">
-            <span class="info-box-text">Driving side</span>
-            <span class="info-box-number">
-              {{ object.get_driving_side_display }}</span>
-      
-            <div class="progress">
-              <div class="progress-bar" style="width: 100%"></div>
-            </div>
-            <span class="progress-description">
-              <br>
-            </span>
-          </div>
-          <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-          
       </div>
-
-      {% if population %}
-      <div class="col-md-6">
-
-        <a href="{% url 'country-population-detail' object.slug %}" 
-          title="{{ object.name }} population">
-          <!-- small card -->
-          <div class="small-box bg-warning">
-            <div class="inner">
-              <h3>
-                {{ population.total|intcomma }}
-              </h3>
-
-              <p>Population</p>
-            </div>
-            <div class="icon">
-              <i class="fas fa-users"></i>
-            </div>
-            <span class="small-box-footer">
-              ({{ population.source.code }}, {{ population.year }})
-            </span>
-          </div>
-        </a>
-
-        <a href="{% url 'country-population-detail' object.slug %}" 
-          title="{{ object.name }} population">
-          <!-- small card -->
-          <div class="small-box bg-info">
-            <div class="inner">
-              <h3>{{ population.male|intcomma }} 
-                <small>({{ population.male_percent|floatformat:1}} %)</small></h3>
-
-              <p>Male Population</p>
-            </div>
-            <div class="icon">
-              <i class="fas fa-male"></i>
-            </div>
-          </div>
-        </a>
-
-        <a href="{% url 'country-population-detail' object.slug %}" 
-          title="{{ object.name }} population">
-          <!-- small card -->
-          <div class="small-box bg-danger">
-            <div class="inner">
-              <h3>{{ population.female|intcomma }} 
-                <small>({{ population.female_percent|floatformat:1}} %)</small></h3>
-
-              <p>Female Population</p>
-            </div>
-            <div class="icon">
-              <i class="fas fa-female"></i>
-            </div>
-          </div>
-        </a>
-
-        <a href="{% url 'country-population-detail' object.slug %}" 
-          title="{{ object.name }} population">
-          <!-- small card -->
-          <div class="small-box bg-success">
-            <div class="inner">
-              <p>
-                Population growth: <strong>
-                  {{ population.change|intcomma }} 
-                  ({{ population.change_rate|floatformat:2 }}%)
-                </strong> <br>
-                Median age: <strong>
-                  {{ population.median_age|floatformat:1 }} years</strong> <br>
-                Density: <strong>
-                  {{ population.density|floatformat:1 }} people/km2</strong> <br>
-                Total Fertility: <strong>
-                  {{ population.fertility_rate|floatformat:1 }} 
-                </strong> live births per woman <br>
-              </p>
-            </div>
-            <div class="icon">
-              <i class="fas fa-child"></i>
-            </div>
-          </div>
-        </a>
-          
-      </div>
-      {% endif %}  
 
     </div>
 

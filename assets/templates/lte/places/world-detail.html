@@ -15,7 +15,149 @@
 
       <div class="col-md-6">
 
-        <div class="info-box bg-warning">
+        <a href="{% url 'world-gdp-detail' %}" 
+          title="{{ title }} GDP">
+          <!-- small card -->
+          <div class="small-box bg-success">
+            <div class="inner">
+              <h4>
+                <strong>${{ gdp.gdp_current|intcomma }}</strong>
+              </h4>
+              <p>Gross Domestic Product (GDP): 
+                ${{ gdp.gdp_current|intword }}</p>
+              <h4>
+                <strong>${{ gdp.gdp_percapita_current|intcomma }}</strong>
+              </h4>
+              <p>GDP per capita</p>
+              <hr>
+              <h4>
+                <strong>${{ gdp.gdp_ppp_current|intcomma }}</strong>
+              </h4>
+              <p>GDP PPP: 
+                ${{ gdp.gdp_ppp_current|intword }}
+              </p>
+              <h4>
+                <strong>${{ gdp.gdp_percapita_ppp_current|intcomma }}</strong>
+              </h4>
+              <p>GDP PPP per capita</p>
+            </div>
+            <div class="icon">
+              <i class="fas fa-money"></i>
+            </div>
+            <span class="small-box-footer">
+              ({{ gdp.source.code }}, {{ gdp.year }})
+            </span>
+          </div>
+        </a>
+
+        <div class="info-box bg-info">
+          <span class="info-box-icon d-none d-sm-block"><i class="fas fa-info"></i></span>
+      
+          <div class="info-box-content">
+            <span class="info-box-text my-2">
+              <a href="{% url 'country-area-list' %}">
+                <i class="fas fa-map pr-2"></i> Country areas
+              </a>
+            </span>
+
+            <span class="info-box-text my-2">
+              <a href="{% url 'phone-code-list' %}">
+                <i class="fas fa-phone-alt pr-2"></i> International phone codes
+              </a>
+            </span>
+
+            <span class="info-box-text my-2">
+              <a href="{% url 'capital-city-list' %}">
+                <i class="fas fa-university pr-2"></i> Countries' capital cities
+              </a>
+            </span>
+
+            <span class="info-box-text my-2">
+              <a href="{% url 'country-currency-list' %}">
+                <i class="fas fa-credit-card pr-2"></i> Currencies of Countries
+              </a>
+            </span>
+
+            <span class="info-box-text my-2">
+              <a href="{% url 'country-language-list' %}">
+                <i class="fas fa-language pr-2"></i> Country languages and alphabets
+              </a>
+            </span>
+
+            <span class="info-box-text my-2">
+              <a href="{% url 'country-tld-list' %}">
+                <i class="fas fa-network-wired pr-2"></i> Top level domains (TLDs)
+              </a>
+            </span>
+
+            <span class="info-box-text my-2">
+              <a href="{% url 'country-code-list' %}">
+                <i class="fas fa-code pr-2"></i> Country codes (ISO, UN, FIPS)
+              </a>
+            </span>
+            
+            <span class="info-box-text my-2">
+              <a href="{% url 'driving-side-list' %}">
+                <i class="fas fa-car pr-2"></i> Country driving sides
+              </a>
+            </span>
+            
+            <span class="info-box-text my-2">
+              <a href="{% url 'world-population-detail' %}#countries">
+                <i class="fas fa-users pr-2"></i> Country populations
+              </a>
+            </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+        
+    </div>
+
+      <div class="col-md-6">
+
+        <a href="{% url 'world-population-detail' %}" 
+          title="{{ title }} population">
+          <!-- small card -->
+          <div class="small-box bg-warning">
+            <div class="inner">
+              <h4>
+                <strong>{{ population.total|intcomma }}</strong>
+              </h4>
+              <p>Population: {{ population.total|intword }}</p>
+              <hr>
+              <h5><strong>{{ population.male|intcomma }}</strong></h5> 
+              <p>
+                Male Population 
+                ({{ population.male_percent|floatformat:1}} %)
+              </p>
+              <h5><strong>{{ population.female|intcomma }}</strong></h5>
+              <p>
+                Female Population 
+                ({{ population.female_percent|floatformat:1}} %)</p>
+              <hr>
+              Population growth: <strong>
+                {{ population.change|intcomma }} 
+                ({{ population.change_rate|floatformat:2 }}%)
+              </strong> <br>
+              Median age: <strong>
+                {{ population.median_age|floatformat:1 }} years</strong> <br>
+              Density: <strong>
+                {{ population.density|floatformat:1 }} people/km2</strong> <br>
+              Total Fertility: <strong>
+                {{ population.fertility_rate|floatformat:1 }} 
+              </strong> live births per woman <br>
+            </div>
+            <div class="icon float-left">
+              <i class="fas fa-users"></i>
+            </div>
+            <span class="small-box-footer">
+              ({{ population.source.code }}, {{ population.year }})
+            </span>
+          </div>
+        </a>
+
+        <div class="info-box bg-success">
           <span class="info-box-icon d-none d-sm-block"><i class="far fa-map"></i></span>
       
           <div class="info-box-content">
@@ -40,131 +182,6 @@
           <!-- /.info-box-content -->
         </div>
         <!-- /.info-box -->
-
-        <div class="info-box bg-info">
-          <span class="info-box-icon d-none d-sm-block"><i class="fas fa-info"></i></span>
-      
-          <div class="info-box-content">
-            <span class="info-box-text my-2"><a href="{% url 'country-area-list' %}">
-              <i class="fas fa-map pr-2"></i> Country areas
-            </a></span>
-
-            <span class="info-box-text my-2"><a href="{% url 'phone-code-list' %}">
-              <i class="fas fa-phone-alt pr-2"></i> International phone codes
-            </a></span>
-
-            <span class="info-box-text my-2"><a href="{% url 'capital-city-list' %}">
-              <i class="fas fa-university pr-2"></i> Countries' capital cities
-            </a></span>
-
-            <span class="info-box-text my-2"><a href="{% url 'country-currency-list' %}">
-              <i class="fas fa-credit-card pr-2"></i> Currencies of Countries
-            </a></span>
-
-            <span class="info-box-text my-2"><a href="{% url 'country-language-list' %}">
-              <i class="fas fa-language pr-2"></i> Country languages and alphabets
-            </a></span>
-
-            <span class="info-box-text my-2"><a href="{% url 'country-tld-list' %}">
-              <i class="fas fa-network-wired pr-2"></i> Top level domains (TLDs)
-            </a></span>
-
-            <span class="info-box-text my-2"><a href="{% url 'country-code-list' %}">
-              <i class="fas fa-code pr-2"></i> Country codes (ISO, UN, FIPS)
-            </a></span>
-            
-            <span class="info-box-text my-2"><a href="{% url 'driving-side-list' %}">
-              <i class="fas fa-car pr-2"></i> Country driving sides
-            </a></span>
-            
-            <span class="info-box-text my-2"><a href="{% url 'world-population-detail' %}#countries">
-              <i class="fas fa-users pr-2"></i> Country populations
-            </a></span>
-          </div>
-          <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-        
-    </div>
-
-      <div class="col-md-6">
-
-        <a href="{% url 'world-population-detail' %}" 
-          title="{{ title }} population">
-          <!-- small card -->
-          <div class="small-box bg-warning">
-            <div class="inner">
-              <h3>
-                {{ population.total|intcomma }}
-              </h3>
-
-              <p>Population</p>
-            </div>
-            <div class="icon">
-              <i class="fas fa-users"></i>
-            </div>
-            <span class="small-box-footer">
-              ({{ population.source.code }}, {{ population.year }})
-            </span>
-          </div>
-        </a>
-
-        <a href="{% url 'world-population-detail' %}" 
-          title="{{ title }} population">
-          <!-- small card -->
-          <div class="small-box bg-info">
-            <div class="inner">
-              <h3>{{ population.male|intcomma }}
-                <small>({{ population.male_percent|floatformat:1}} %)</small></h3>
-
-              <p>Male Population</p>
-            </div>
-            <div class="icon">
-              <i class="fas fa-male"></i>
-            </div>
-          </div>
-        </a>
-
-        <a href="{% url 'world-population-detail' %}" 
-          title="{{ object.name }} population">
-          <!-- small card -->
-          <div class="small-box bg-danger">
-            <div class="inner">
-              <h3>{{ population.female|intcomma }}
-                <small>({{ population.female_percent|floatformat:1}} %)</small></h3>
-
-              <p>Female Population</p>
-            </div>
-            <div class="icon">
-              <i class="fas fa-female"></i>
-            </div>
-          </div>
-        </a>
-
-        <a href="{% url 'world-population-detail' %}" 
-          title="{{ object.name }} population">
-          <!-- small card -->
-          <div class="small-box bg-success">
-            <div class="inner">
-              <p>
-                Population growth: <strong>
-                  {{ population.change|intcomma }} 
-                  ({{ population.change_rate|floatformat:2 }}%)
-                </strong> <br>
-                Median age: <strong>
-                  {{ population.median_age|floatformat:1 }} years</strong> <br>
-                Density: <strong>
-                  {{ population.density|floatformat:1 }} people/km2</strong> <br>
-                Total Fertility: <strong>
-                  {{ population.fertility_rate|floatformat:1 }}
-                </strong> live births per woman <br>
-              </p>
-            </div>
-            <div class="icon">
-              <i class="fas fa-child"></i>
-            </div>
-          </div>
-        </a>
           
       </div>
 
