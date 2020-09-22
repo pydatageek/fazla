@@ -27,11 +27,10 @@
   <link rel="stylesheet" 
     href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 
-    <!-- Font Awesome -->
+  {% compress css %}      
+  <!-- Font Awesome -->
     <link rel="stylesheet" 
       href="{% static 'lte/plugins/fontawesome-free/css/all.min.css' %}">
-
-  {% compress css %}      
 
     {% block extra_plugin_style %}{% endblock %}
 
