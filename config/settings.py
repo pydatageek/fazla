@@ -287,14 +287,14 @@ COMPRESS_FILTERS = {
     "js": ["compressor.filters.jsmin.JSMinFilter"],
 }
 
-CACHES = {
-    'default': {
-        # database cache
-        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'TIMEOUT': 3600,
-        'LOCATION': 'fn_cache_table',
-    }
-}
+# CACHES = {
+#     'default': {
+#         # database cache
+#         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+#         'TIMEOUT': 3600,
+#         'LOCATION': 'fn_cache_table',
+#     }
+# }
 
 """
 # for compression
