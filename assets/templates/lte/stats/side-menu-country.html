@@ -5,6 +5,23 @@
   <div class="inner">
     <ul>
       <li>
+        <a href="{% url 'world-covid19-detail' %}">
+          World Covid 19
+        </a>
+        <ul>
+          <li>
+            <a href="{% url 'world-covid19-detail' %}#countries">
+              Country Covid 19
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="{% url 'country-covid19-detail' view.kwargs.country_slug %}">
+          {{ title }} Covid 19
+        </a>
+      </li>
+      <li>
         <a href="{% url 'world-population-detail' %}">
           World population
         </a>

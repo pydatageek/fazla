@@ -4,3 +4,6 @@ from .gdp import (
 from .population import (
     CountryPopulationDetailView, WorldPopulationDetailView,
 )
+from .pandemy import (
+    CountryCovid19DetailView, WorldCovid19DetailView
+)

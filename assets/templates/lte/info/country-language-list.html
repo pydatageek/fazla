@@ -35,12 +35,12 @@
             </td>
             <td class="text-right">
               {% for lang in item.languages.all %}
-                {{ lang.name }} ({{ lang.code }})
+                {{ lang.name }} ({{ lang.code }}){% if not forloop.last %}, {% endif %}
               {% endfor %}
             </td>
             <td class="text-right">
               {% for alp in item.alphabets.all %}
-                {{ alp.name }}
+                {{ alp.name }} ({{ lang.code }}){% if not forloop.last %}, {% endif %}
               {% endfor %}
             </td>
           </tr>

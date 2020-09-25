@@ -1,0 +1,11 @@
+{% extends 'lte/stats/base.html' %}
+{% load static i18n humanize %}
+
+{% block content %}
+<form action="{% url 'covid19-save-data' %}" method="post">
+  {% csrf_token %}
+  <button type="submit" name='mybtn2'>
+    Download & Save</button>
+</form>
+{% endblock %}
+

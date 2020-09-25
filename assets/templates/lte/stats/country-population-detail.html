@@ -43,16 +43,30 @@
         <tr>
           <td></td>
           <td class="text-right">{{ item.year }}</td>
-          <td class="text-right">{{ item.total|intcomma }}</td>
-          <td class="text-right">{{ item.female|intcomma }}</td>
-          <td class="text-right">{{ item.male|intcomma }}</td>
-          <td class="text-right">
+          <td class="text-right" data-order="{{ item.total }}"
+            title="{{ item.total|intword }}">
+            {{ item.total|intcomma }}</td>
+          <td class="text-right" data-order="{{ item.female }}"
+            title="{{ item.female|intword }}">
+            {{ item.female|intcomma }}</td>
+          <td class="text-right" data-order="{{ item.male }}"
+            title="{{ item.male|intword }}">
+            {{ item.male|intcomma }}</td>
+          <td class="text-right" data-order="{{ item.change_rate }}"
+            title="{{ item.change_rate|floatformat:2 }}%">
             {{ item.change_rate|floatformat:2 }}
           </td>
-          <td class="text-right">{{ item.change|intcomma }}</td>
-          <td class="text-right">{{ item.fertility_rate|floatformat:1|intcomma }}</td>
-          <td class="text-right">{{ item.median_age|floatformat:1|intcomma }}</td>
-          <td class="text-right">{{ item.density|floatformat:1|intcomma }}</td>
+          <td class="text-right" data-order="{{ item.change }}">
+            {{ item.change|intcomma }}</td>
+          <td class="text-right" data-order="{{ item.fertility_rate }}"
+            title="{{ item.fertility_rate|floatformat:1 }} births per woman">
+            {{ item.fertility_rate|floatformat:1|intcomma }}</td>
+          <td class="text-right" data-order="{{ item.median_age }}"
+            title="{{ item.median_age|floatformat:1 }} years">
+            {{ item.median_age|floatformat:1|intcomma }}</td>
+          <td class="text-right" data-order="{{ item.density }}"
+            title="{{ item.density|floatformat:1|intcomma }} people/km2">
+            {{ item.density|floatformat:1|intcomma }}</td>
         </tr>
         {% endfor %}
       </tbody>

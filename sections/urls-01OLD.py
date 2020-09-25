@@ -11,6 +11,7 @@ from stats.views import (
     CountryPopulationDetailView,
     WorldPopulationDetailView,
     CountryGdpDetailView, WorldGdpDetailView,
+    Covid19AdminView, save_covid19_data,
     CountryCovid19DetailView, WorldCovid19DetailView
 )
 from .views import HomeView, AboutView, ContactView, SourceView
@@ -36,6 +37,12 @@ urlpatterns = [
          WorldCovid19DetailView.as_view(
              template_name=template_base+'stats/'+'world-covid19-detail.html'
          ), name='world-covid19-detail'),
+
+    path('admin-covid19/covid19-save-data/',
+         save_covid19_data, name='covid19-save-data'),
+    path('admin-covid19/', Covid19AdminView.as_view(
+        template_name=template_base+'stats/'+'covid19-admin.html'
+    ), name='covid19-admin'),
 
     path('i/international-phone-codes/', InfoTemplateView.as_view(
         template_name=template_base+'info/'+'phone-code-detail.html'

@@ -59,7 +59,7 @@
   {% if title_page_suffix %} 
     {% block meta_title_page_suffix %}{{ title_page_suffix }} {% endblock %}
   {% endif %}
-  {% if request.path != '/' %} | {% trans 'Fazla.NET' %}{% endif %}
+  {% if request.path != '/' %} | {% trans 'Fazla.net facts and stats' %}{% endif %}
   </title>
   {% endblock %}
 </head>
@@ -68,12 +68,10 @@
 <body 
   class="hold-transition sidebar-collapse sidebar-mini 
   {% block body_class %}{% endblock %}"> <!-- sidebar-mini -->
+
 <!-- Site wrapper -->
 <div class="wrapper">
-  <!-- Navbar -->
-
-  <!-- /.navbar -->
-
+  
   <!-- Navbar -->
   {% include 'lte/_partials/_10_nav.html' %}
   <!-- /.navbar -->

@@ -29,6 +29,7 @@ def handler500(request):
 
 class HomeView(TemplateView):
     """"""
+    # Fazla.net facts and stats
 
 
 class SourceView(TemplateView):

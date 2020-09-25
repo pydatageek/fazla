@@ -12,7 +12,6 @@ from places.models import Country
 from stats.models import (
     CountryGdp, WorldGdp
 )
-from stats.services import get_population
 
 
 class CountryGdpDetailView(TemplateView):

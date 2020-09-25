@@ -4,11 +4,13 @@ from import_export.admin import ImportExportModelAdmin
 
 from .models import (
     CountryPopulation, WorldPopulation,
-    CountryGdp, WorldGdp
+    CountryGdp, WorldGdp,
+    Covid19,
 )
 from .resources import (
     CountryPopulationResource, WorldPopulationResource,
-    CountryGdpResource, WorldGdpResource
+    CountryGdpResource, WorldGdpResource,
+    Covid19Resource
 )
 
 
@@ -51,3 +53,15 @@ class WorldGdpAdmin(ImportExportModelAdmin):
     list_display = (
         'year',
         'gdp_current', 'gdp_percapita_current')
+
+
+@admin.register(Covid19)
+class Covid19Admin(ImportExportModelAdmin):
+    """"""
+    resource_class = Covid19Resource
+
+    date_hierarchy = 'date'
+    search_fields = ('country__name',)
+    list_display = (
+        'id', 'date',
+        'total_confirmed', 'total_death', 'new_confirmed', 'new_death')

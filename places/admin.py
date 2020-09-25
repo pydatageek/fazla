@@ -19,7 +19,7 @@ class CountryAdmin(BaseAdmin, ImportExportModelAdmin):
     search_fields = (
         'name', 'iso_numeric', 'iso2', 'iso3')
     list_display = (
-        'name', 'is_independent', 'iso2', 'iso_numeric',
+        'name', 'is_independent', 'iso2', 'parent_iso2', 'parent', 'iso_numeric',
         'slug', 'unique_code', 'area'
     )
 
@@ -68,6 +68,11 @@ class CountryAdmin(BaseAdmin, ImportExportModelAdmin):
             ),
         }),
     )
+
+    def parent_iso2(self, obj):
+        if obj.parent:
+            return obj.parent.iso2
+    parent_iso2.short_description = _('parent iso2')
 
 
 @admin.register(World)

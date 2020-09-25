@@ -11,5 +11,9 @@
   <a href="{% url 'source-page' %}#pop">
     United Nations Department of Economic and Social Affairs 
   </a>, World Population Projection, 2019 (retrieved in September 2020)
+  {% elif stats_type == 'covid19' %}
+  <a href="{% url 'source-page' %}#covid19">
+    Geneva: World Health Organization 
+  </a>, WHO coronavirus disease (COVID-19) dashboard, 2020 (retrieved on {{ latest_date }})  
   {% endif %}
 {% endblock source %}

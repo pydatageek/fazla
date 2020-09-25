@@ -25,10 +25,11 @@
 h2:after {
   content: "";
   display: block;
-  width: 500px;
+  max-width: 500px;
   padding-top: 10px;
   border-bottom:2px solid #117a8b;
 }
+
 a {
   color: #117a8b;
 }

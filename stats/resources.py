@@ -6,7 +6,8 @@ from politics.models import InternationalOrganization
 from sources.models import Source
 from .models import (
     CountryPopulation, WorldPopulation,
-    CountryGdp, WorldGdp
+    CountryGdp, WorldGdp,
+    Covid19
 )
 
 
@@ -64,3 +65,19 @@ class WorldGdpResource(resources.ModelResource):
 
     class Meta:
         model = WorldGdp
+
+
+class Covid19Resource(resources.ModelResource):
+    source = fields.Field(
+        attribute='source',
+        column_name='source',
+        widget=ForeignKeyWidget(Source, field='code')
+    )
+    country = fields.Field(
+        attribute='country',
+        column_name='country',
+        widget=ForeignKeyWidget(Country, field='iso2')
+    )
+
+    class Meta:
+        model = Covid19
