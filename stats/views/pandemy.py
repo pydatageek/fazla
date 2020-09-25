@@ -75,6 +75,6 @@ class WorldCovid19DetailView(TemplateView):
         context['covid'] = covid_world
 
         context['countries_covid'] = Covid19.objects.filter(
-            date=latest_date).select_related('country')
+            date=latest_date).select_related('country').order_by('country')
 
         return context

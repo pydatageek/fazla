@@ -72,3 +72,7 @@ class Covid19(StampedModel):
         unique_together = ('country', 'date')
         verbose_name = _('Covid19')
         verbose_name_plural = _('Covid19')
+
+    def get_absolute_url(self):
+        return reverse(
+            'country-covid19-detail', args=[self.country.slug])

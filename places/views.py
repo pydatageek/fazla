@@ -14,7 +14,8 @@ from core.choices import titles, current_year, current_year_gdp
 from economics.models import Currency
 from linguistics.models import Alphabet, Language
 from stats.models import (
-    CountryPopulation, WorldPopulation, CountryGdp, WorldGdp)
+    CountryPopulation, WorldPopulation, CountryGdp, WorldGdp,
+    Covid19)
 from .models import Continent, Country, World
 
 
@@ -57,6 +58,10 @@ class CountryDetailView(DetailView):
             country__slug=self.kwargs['slug'], year=current_year).first()
         context['gdp'] = CountryGdp.objects.filter(
             country__slug=self.kwargs['slug'], year=current_year_gdp).first()
+
+        latest_date = Covid19.objects.latest('date').date
+        context['covid19'] = Covid19.objects.filter(
+            country__slug=self.kwargs['slug'], date=latest_date)
         return context
 
 
@@ -70,6 +75,9 @@ class WorldDetailView(TemplateView):
         context['population'] = WorldPopulation.objects.filter(
             year=current_year).first()
         context['gdp'] = WorldGdp.objects.filter(year=current_year_gdp).first()
+
+        latest_date = Covid19.objects.latest('date').date
+        context['covid19'] = Covid19.objects.world()
         return context
 
 

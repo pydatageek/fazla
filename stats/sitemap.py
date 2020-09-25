@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 
@@ -5,6 +7,7 @@ from core.choices import current_year
 from stats.models import (
     CountryGdp, WorldGdp,
     CountryPopulation, WorldPopulation,
+    Covid19
 )
 
 
@@ -190,3 +193,30 @@ class WorldGdpSitemap(Sitemap):
 
     def lastmod(self, obj):
         return obj.updated_at
+
+
+class CountryCovid19Sitemap(Sitemap):
+    changefreq = 'weekly'
+    priority = 0.8
+    limit = 10000
+
+    def items(self):
+        return Covid19.objects.filter(date=datetime(2020, 2, 11))
+
+    def lastmod(self, obj):
+        return obj.updated_at
+
+
+class WorldCovid19Sitemap(Sitemap):
+    changefreq = 'weekly'
+    priority = 0.8
+    limit = 10000
+
+    def items(self):
+        # Return list of url names for views to include in sitemap
+        return [
+            'world-covid19-detail'
+        ]
+
+    def location(self, item):
+        return reverse(item)
