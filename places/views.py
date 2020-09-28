@@ -61,9 +61,9 @@ class CountryDetailView(DetailView):
         context['gdp'] = CountryGdp.objects.filter(
             country__slug=self.kwargs['slug']).order_by('-year').first()
 
-        latest_date = Covid19.objects.latest('date').date
         context['covid19'] = Covid19.objects.filter(
-            country__slug=self.kwargs['slug'], date=latest_date)
+            country__slug=self.kwargs['slug']).order_by('-date').first()
+
         return context
 
 
@@ -79,7 +79,7 @@ class WorldDetailView(TemplateView):
         context['gdp'] = WorldGdp.objects.filter(year=current_year_gdp).first()
 
         latest_date = Covid19.objects.latest('date').date
-        context['covid19'] = Covid19.objects.world()
+        context['covid19'] = Covid19.objects.world().order_by('-date').first()
         return context
 
 

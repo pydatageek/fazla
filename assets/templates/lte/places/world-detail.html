@@ -11,6 +11,43 @@
         The World, our planet Earth
     </div>
 
+    <a href="{% url 'world-covid19-detail' %}" 
+          title="{{ object.name }} covid 19">
+      <div class="small-box bg-danger">
+        <div class="icon">
+          <i class="fa fa-virus"></i>
+        </div>
+        <div class="inner">
+          <h4 class="text-center">Covid 19 (coronavirus)</h4>
+          <div class="row text-center">
+            <div class="col-md-6 col-12">
+              <h5>
+                Total confirmed: {{ covid19.world_total_confirmed|intcomma }} <br>
+                <small>
+                  Today confirmed: {{ covid19.world_new_confirmed|intcomma }}
+                </small>
+              </h5>
+            </div>
+            <div class="col-md-6 col-12">
+              <h5>
+                Total deaths: {{ covid19.world_total_death|intcomma }} <br>
+                <small>
+                  Today deaths: {{ covid19.world_new_death|intcomma }}
+                </small>
+              </h5>
+            </div>
+          </div>
+          <p class="text-center">
+            For some countries data may shift for a day because date in 
+            WHO Covid 19 data is the date of reporting to World Health 
+            Organization.</p>
+        </div>
+        <span class="small-box-footer">
+          ({{ covid19.source.code }}, {{ covid19.date }})
+        </span>
+      </div>
+    </a>
+
     <div class="container row">
 
       <div class="col-md-6">

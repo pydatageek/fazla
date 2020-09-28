@@ -2,6 +2,7 @@
 {% load static i18n humanize imagekit %}
 
 {% block content %}
+{% if covid.last.total_confirmed != 0 %}
 <a name="yearly"></a>
 <h2>
   <a href="{% url 'country-detail' view.kwargs.country_slug %}" 
@@ -11,7 +12,11 @@
 </h2>
 
 <div class="row">
-
+  <p><span class="text-danger">WARNING: </span>
+    For some countries data may shift for a day because date in 
+    WHO Covid 19 data is the date of reporting to World Health Organization.
+    We are trying hard to fix the issue for each country.
+  </p>
   <div class="col-sm-9 col-12">
     <div id="curve_chart" style="height: 500px"></div>
 
@@ -100,6 +105,16 @@
     </tfoot>
   </table>
 </div>
+
+{% else %}
+<p>
+  There is no Covid 19 (coronavirus) data on {{ title }}. <br>
+  Return to <a href="{% url 'country-detail' view.kwargs.country_slug %}" 
+    title="About {{ title }}">
+    {{ title }}
+  </a> information page.
+</p>
+{% endif %}
 
 {% endblock content %}
 

@@ -98,7 +98,11 @@
   <h2>{{ title }} Covid 19 Statistics by Countries ({{ latest_date }})</h2>
 
   <div class="card-body">
-    <p>{{ description }}</p>
+    <p><span class="text-danger">WARNING: </span>
+      For some countries data may shift for a day because date in 
+      WHO Covid 19 data is the date of reporting to World Health Organization.
+      We are trying hard to fix the issue for each country.
+    </p>
     <table id="list2" class="table table-hover dataTable display">
       <caption>Countries Covid 19 Stats: Confirmed cases, Death, Death rate</caption>
       <thead>

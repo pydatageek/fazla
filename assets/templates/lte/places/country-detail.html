@@ -12,12 +12,11 @@
           {% if object.long_name %}
           (<em>{{ object.long_name }}</em>)
           {% endif %}
-        is a {{ object.get_is_independent_display }} 
-      
-      {% if object.parent %}
+        is a {{ object.get_is_independent_display }}{% if not object.parent %}. 
+      {% else %}
         and has dependency to 
         <a href="{% url 'country-detail' object.parent.slug %}">
-          {{ object.parent }}</a>{% endif %}.
+          {{ object.parent }}</a>.{% endif %}
       </h5>
 
       <p>
@@ -27,15 +26,56 @@
       </p>
     </div>
 
+    {% if covid19.total_confirmed != 0 %}
+    <a href="{% url 'country-covid19-detail' object.slug %}" 
+          title="{{ object.name }} covid 19">
+      <div class="small-box bg-danger">
+        <div class="icon">
+          <i class="fa fa-virus"></i>
+        </div>
+        <div class="inner">
+          <h4 class="text-center">Covid 19 (coronavirus)</h4>
+          <div class="row text-center">
+            <div class="col-md-6 col-12">
+              <h5>
+                Total confirmed: {{ covid19.total_confirmed|intcomma }} <br>
+                <small>
+                  Today confirmed: {{ covid19.new_confirmed|intcomma }}
+                </small>
+              </h5>
+            </div>
+            <div class="col-md-6 col-12">
+              <h5>
+                Total deaths: {{ covid19.total_death|intcomma }} <br>
+                <small>
+                  Today deaths: {{ covid19.new_death|intcomma }}
+                </small>
+              </h5>
+            </div>
+          </div>
+          <p class="text-center">
+            For some countries data may shift for a day because date in 
+            WHO Covid 19 data is the date of reporting to World Health 
+            Organization.</p>
+        </div>
+        <span class="small-box-footer">
+          ({{ covid19.source.code }}, {{ covid19.date }})
+        </span>
+      </div>
+    </a>
+    {% endif %}
+
     <div class="container row">
 
-      <div class="{% if population %}col-md-6{% else %}col-12{% endif %}">
+      <div class="col-md-6 col-12">
 
+        {% if gdp %}
         <a href="{% url 'country-gdp-detail' object.slug %}" 
           title="{{ object.name }} GDP">
           <!-- small card -->
           <div class="small-box bg-success">
             <div class="inner">
+              <h4 class="text-center">Gross Domestic Product (GDP)</h4>
               <h4>
                 <strong>${{ gdp.gdp_current|intcomma }}</strong>
               </h4>
@@ -45,6 +85,8 @@
                 <strong>${{ gdp.gdp_percapita_current|intcomma }}</strong>
               </h4>
               <p>GDP per capita</p>
+              
+              {% if gdp_ppp_current %}
               <hr>
               <h4>
                 <strong>${{ gdp.gdp_ppp_current|intcomma }}</strong>
@@ -56,6 +98,7 @@
                 <strong>${{ gdp.gdp_percapita_ppp_current|intcomma }}</strong>
               </h4>
               <p>GDP PPP per capita</p>
+              {% endif %}
             </div>
             <div class="icon">
               <i class="fas fa-money"></i>
@@ -65,6 +108,7 @@
             </span>
           </div>
         </a>
+        {% endif %}
 
         {% if object.currencies %}
         <div class="info-box bg-info">         
@@ -142,7 +186,7 @@
         </div>
         <!-- /.info-box -->
         {% endif %}
-        
+          
         {% if object.iso2 and object.iso2|first not in '0123' %}
         <div class="info-box bg-success">         
           <span class="info-box-icon">
@@ -194,28 +238,33 @@
           
       </div>
 
-      <div class="col-md-6">
+      <div class="col-md-6 col-12">
 
         <a href="{% url 'country-population-detail' object.slug %}" 
           title="{{ object.name }} population">
           <!-- small card -->
           <div class="small-box bg-warning">
             <div class="inner">
+              <h4 class="text-center">Population</h4>
               <h4>
                 <strong>{{ population.total|intcomma }}</strong>
               </h4>
               <p>Population: {{ population.total|intword }}</p>
               <hr>
+              {% if population.male %}
               <h5><strong>{{ population.male|intcomma }}</strong></h5> 
               <p>
                 Male Population 
                 ({{ population.male_percent|floatformat:1}} %)
               </p>
+              {% endif %}
+              {% if population.female %}
               <h5><strong>{{ population.female|intcomma }}</strong></h5>
               <p>
                 Female Population 
                 ({{ population.female_percent|floatformat:1}} %)</p>
               <hr>
+              {% endif %}
               {% if population.change %}
               Population growth: <strong>
                 {{ population.change|intcomma }} 
@@ -301,7 +350,7 @@
         </div>
         <!-- /.info-box -->
         {% endif %}
-        
+          
         {% if object.languages or object.alphabets %}
         <div class="info-box bg-warning">         
           <span class="info-box-icon">
