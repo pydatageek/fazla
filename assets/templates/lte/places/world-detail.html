@@ -12,7 +12,7 @@
     </div>
 
     <a href="{% url 'world-covid19-detail' %}" 
-          title="{{ object.name }} covid 19">
+          title="World covid-19 statistics">
       <div class="small-box bg-danger">
         <div class="icon">
           <i class="fa fa-virus"></i>
@@ -43,7 +43,7 @@
             Organization.</p>
         </div>
         <span class="small-box-footer">
-          ({{ covid19.source.code }}, {{ covid19.date }})
+          (WHO-COVID19, {{ covid19.date }})
         </span>
       </div>
     </a>
