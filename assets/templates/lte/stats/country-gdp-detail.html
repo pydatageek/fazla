@@ -2,7 +2,7 @@
 {% load static i18n humanize imagekit %}
 
 {% block content %}
-{% if gdp_all %}
+
 <a name="yearly"></a>
 <h2>Yearly Gross Domestic Product (GDP) of  
   <a href="{% url 'country-detail' view.kwargs.country_slug %}" 
@@ -113,7 +113,7 @@
   </div>
 </div>
 
-{% else %}
+{% if 1 > 5 %}
 <p>
   There is no GDP data on {{ title }}. <br>
   Return to <a href="{% url 'country-detail' view.kwargs.country_slug %}" 
