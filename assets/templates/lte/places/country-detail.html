@@ -17,9 +17,8 @@
       {% if object.parent %}
         and has dependency to 
         <a href="{% url 'country-detail' object.parent.slug %}">
-          {{ object.parent }}</a>
-      {% endif %}
-      .</h5>
+          {{ object.parent }}</a>{% endif %}.
+      </h5>
 
       <p>
         <a href="{% url 'capital-city-list' %}" 

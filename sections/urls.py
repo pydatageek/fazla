@@ -134,8 +134,11 @@ urlpatterns = [
              template_name=template_base+'places/'+'country-detail.html'
          ), name='country-detail'),
 
-    path('', RedirectView.as_view(
-        url='world/', permanent=False), name='home'),
+    path('', WorldDetailView.as_view(
+        template_name=template_base+'places/'+'world-detail.html'
+    ), name='home'),
+    # path('', RedirectView.as_view(
+    #     url='world/', permanent=False), name='home'),
     # path('', HomeView.as_view(
     #     template_name=template_base+'index.html'
     # ), name='home'),

@@ -69,7 +69,7 @@
         <td></td>
         <td class="text-right">{{ item.year }}</td>
         <td class="text-right" data-order="{{ item.gdp_current }}" 
-          title="{{ item.gdp_current|intcomma }}">
+          title="{{ item.gdp_current|intword }}">
           {{ item.gdp_current|intcomma }}</td>
         <td class="text-right" data-order="{{ item.change_rate }}">
           {{ item.change_rate|floatformat:2 }}</td>
@@ -78,7 +78,7 @@
         <td class="text-right" data-order="{{ item.change_rate_percapita }}">
           {{ item.change_rate_percapita|floatformat:2 }}</td>
         <td class="text-right" data-order="{{ item.gdp_ppp_current }}" 
-          title="{{ item.gdp_ppp_current|intcomma }}">
+          title="{{ item.gdp_ppp_current|intword }}">
           {{ item.gdp_ppp_current|intcomma }}</td>
         <td class="text-right" data-order="{{ item.gdp_percapita_ppp_current }}">
           {{ item.gdp_percapita_ppp_current|intcomma }}</td>

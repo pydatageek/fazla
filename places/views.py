@@ -56,8 +56,10 @@ class CountryDetailView(DetailView):
         context['title_page_prefix'] = _('Country')
         context['population'] = CountryPopulation.objects.filter(
             country__slug=self.kwargs['slug'], year=current_year).first()
+        # context['gdp'] = CountryGdp.objects.filter(
+        #     country__slug=self.kwargs['slug'], year=current_year_gdp).first()
         context['gdp'] = CountryGdp.objects.filter(
-            country__slug=self.kwargs['slug'], year=current_year_gdp).first()
+            country__slug=self.kwargs['slug']).order_by('-year').first()
 
         latest_date = Covid19.objects.latest('date').date
         context['covid19'] = Covid19.objects.filter(

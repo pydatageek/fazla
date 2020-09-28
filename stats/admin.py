@@ -63,5 +63,5 @@ class Covid19Admin(ImportExportModelAdmin):
     date_hierarchy = 'date'
     search_fields = ('country__name',)
     list_display = (
-        'id', 'date',
+        'id', 'country', 'date',
         'total_confirmed', 'total_death', 'new_confirmed', 'new_death')
