@@ -38,7 +38,7 @@ def get_secret(setting, secrets=secrets):
 SECRET_KEY = get_secret('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'localhost', '.localhost',
@@ -141,22 +141,22 @@ DATABASES = {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # },
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': get_secret('DB_LOCAL_NAME'),
-        'USER': get_secret('DB_LOCAL_UNAME'),
-        'PASSWORD': get_secret('DB_LOCAL_PASS'),
-        'HOST': 'localhost',
-        'PORT': '',
-    },
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': get_secret('DB_REMOTE_NAME'),
-    #     'USER': get_secret('DB_REMOTE_UNAME'),
-    #     'PASSWORD': get_secret('DB_REMOTE_PASS'),
+    #     'NAME': get_secret('DB_LOCAL_NAME'),
+    #     'USER': get_secret('DB_LOCAL_UNAME'),
+    #     'PASSWORD': get_secret('DB_LOCAL_PASS'),
     #     'HOST': 'localhost',
     #     'PORT': '',
     # },
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': get_secret('DB_REMOTE_NAME'),
+        'USER': get_secret('DB_REMOTE_UNAME'),
+        'PASSWORD': get_secret('DB_REMOTE_PASS'),
+        'HOST': 'localhost',
+        'PORT': '',
+    },
 }
 
 
