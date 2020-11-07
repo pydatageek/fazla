@@ -141,22 +141,22 @@ DATABASES = {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # },
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': get_secret('DB_LOCAL_NAME'),
-        'USER': get_secret('DB_LOCAL_UNAME'),
-        'PASSWORD': get_secret('DB_LOCAL_PASS'),
-        'HOST': 'localhost',
-        'PORT': '',
-    },
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': get_secret('DB_REMOTE_NAME'),
-    #     'USER': get_secret('DB_REMOTE_UNAME'),
-    #     'PASSWORD': get_secret('DB_REMOTE_PASS'),
+    #     'NAME': get_secret('DB_LOCAL_NAME'),
+    #     'USER': get_secret('DB_LOCAL_UNAME'),
+    #     'PASSWORD': get_secret('DB_LOCAL_PASS'),
     #     'HOST': 'localhost',
     #     'PORT': '',
     # },
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': get_secret('DB_REMOTE_NAME'),
+        'USER': get_secret('DB_REMOTE_UNAME'),
+        'PASSWORD': get_secret('DB_REMOTE_PASS'),
+        'HOST': 'localhost',
+        'PORT': '',
+    },
 }
 
 
