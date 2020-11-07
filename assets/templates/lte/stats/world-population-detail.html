@@ -1,5 +1,5 @@
 {% extends 'lte/stats/base-list.html' %}
-{% load static i18n humanize imagekit %}
+{% load static i18n humanize imagekit png_math %}
 
 {% block content %}
 <a name="yearly"></a>
@@ -50,10 +50,10 @@
           title="{{ item.total|intword }}">
           {{ item.total|intcomma }}</td>
         <td class="text-right" data-order="{{ item.female }}"
-          title="{{ item.female|intword }}">
+          title="{{ item.female|intword }} ({{ item.female|ratio:item.total }}%)">
           {{ item.female|intcomma }}</td>
         <td class="text-right" data-order="{{ item.male }}"
-          title="{{ item.male|intword }}">
+          title="{{ item.male|intword }} ({{ item.male|ratio:item.total }}%)">
           {{ item.male|intcomma }}</td>
         <td class="text-right" data-order="{{ item.change_rate }}"
           title="{{ item.change_rate|floatformat:2 }}%">
@@ -128,10 +128,10 @@
             title="{{ item.total|intword }}">
             {{ item.total|intcomma }}</td>
           <td class="text-right" data-order="{{ item.female }}"
-            title="{{ item.female|intword }}">
+            title="{{ item.female|intword }} ({{ item.female|ratio:item.total }}%)">
             {{ item.female|intcomma }}</td>
           <td class="text-right" data-order="{{ item.male }}"
-            title="{{ item.male|intword }}">
+            title="{{ item.male|intword }} ({{ item.male|ratio:item.total }}%)">
             {{ item.male|intcomma }}</td>
           <td class="text-right" data-order="{{ item.change_rate }}"
             title="{{ item.change_rate|floatformat:2 }}%">

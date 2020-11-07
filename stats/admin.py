@@ -6,11 +6,13 @@ from .models import (
     CountryPopulation, WorldPopulation,
     CountryGdp, WorldGdp,
     Covid19,
+    CountryHdi, WorldHdi
 )
 from .resources import (
     CountryPopulationResource, WorldPopulationResource,
     CountryGdpResource, WorldGdpResource,
-    Covid19Resource
+    Covid19Resource,
+    CountryHdiResource, WorldHdiResource
 )
 
 
@@ -65,3 +67,21 @@ class Covid19Admin(ImportExportModelAdmin):
     list_display = (
         'id', 'country', 'date',
         'total_confirmed', 'total_death', 'new_confirmed', 'new_death')
+
+
+@admin.register(CountryHdi)
+class CountryHdiAdmin(ImportExportModelAdmin):
+    """"""
+    resource_class = CountryHdiResource
+
+    search_fields = ('country__name', 'year')
+    list_display = ('country', 'year', 'hdi_value')
+
+
+@admin.register(WorldHdi)
+class WorldHdiAdmin(ImportExportModelAdmin):
+    """"""
+    resource_class = WorldHdiResource
+
+    search_fields = ('year',)
+    list_display = ('year', 'hdi_value')

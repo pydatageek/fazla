@@ -109,6 +109,23 @@
           </li>        
         </ul>
       </li>
+      <li>
+        <a href="{% url 'world-hdi-detail' %}">
+          World HDI
+        </a>
+        <ul>
+          <li>
+            <a href="{% url 'world-hdi-detail' %}#countries">
+              Country HDI
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="{% url 'country-hdi-detail' view.kwargs.country_slug %}">
+          {{ title }} HDI
+        </a>
+      </li>
       
     </ul>
   </div>

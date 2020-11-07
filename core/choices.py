@@ -35,5 +35,6 @@ titles = {
     'country_tld': _('International Top Level Domains (TLDs)'),
 
     'gdp': _('GDP'),
+    'hdi': _('HDI'),
 
 }

@@ -43,7 +43,19 @@
         <a href="{% url 'driving-side-list' %}">
           Country driving sides
         </a>
-      </li>    
+      </li>  
+      <li>
+        <a href="{% url 'world-covid19-detail' %}">
+          World Covid-19
+        </a>
+        <ul>
+          <li>
+            <a href="{% url 'world-covid19-detail' %}#countries">
+              Country Covid-19
+            </a>
+          </li>
+        </ul>
+      </li>   
       <li>
         <a href="{% url 'world-population-detail' %}">
           World population
@@ -64,6 +76,18 @@
           <li>
             <a href="{% url 'world-gdp-detail' %}#countries">
               Country GDPs
+            </a>
+          </li>
+        </ul>
+      </li> 
+      <li>
+        <a href="{% url 'world-hdi-detail' %}">
+          World HDI
+        </a>
+        <ul>
+          <li>
+            <a href="{% url 'world-hdi-detail' %}#countries">
+              Country HDI
             </a>
           </li>
         </ul>

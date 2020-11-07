@@ -23,3 +23,11 @@ class BaseAdmin(admin.ModelAdmin):
 @admin.register(Contact)
 class ContactAdmin(BaseAdmin):
     """"""
+    date_hierarchy = 'added_at'
+
+    ordering = ('-added_at',)
+    list_display = ('name', 'email', 'added_at')
+
+    readonly_fields = (
+        'added_at', 'added_by', 'updated_at', 'updated_by',
+        'slug', 'unique_code')

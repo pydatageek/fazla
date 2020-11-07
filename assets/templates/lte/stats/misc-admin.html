@@ -2,10 +2,10 @@
 {% load static i18n humanize %}
 
 {% block content %}
-<form action="{% url 'covid19-save-data' %}" method="post">
+<form action="{% url 'stats-add-ranking' %}" method="post">
   {% csrf_token %}
   <button type="submit" name='mybtn2'>
-    Download & Save</button>
+    Add rankings</button>
 </form>
 {% endblock %}
 

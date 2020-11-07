@@ -7,7 +7,8 @@ from sources.models import Source
 from .models import (
     CountryPopulation, WorldPopulation,
     CountryGdp, WorldGdp,
-    Covid19
+    Covid19,
+    CountryHdi, WorldHdi,
 )
 
 
@@ -81,3 +82,30 @@ class Covid19Resource(resources.ModelResource):
 
     class Meta:
         model = Covid19
+
+
+class WorldHdiResource(resources.ModelResource):
+    source = fields.Field(
+        attribute='source',
+        column_name='source',
+        widget=ForeignKeyWidget(Source, field='code')
+    )
+
+    class Meta:
+        model = WorldHdi
+
+
+class CountryHdiResource(resources.ModelResource):
+    source = fields.Field(
+        attribute='source',
+        column_name='source',
+        widget=ForeignKeyWidget(Source, field='code')
+    )
+    country = fields.Field(
+        attribute='country',
+        column_name='country',
+        widget=ForeignKeyWidget(Country, field='iso2')
+    )
+
+    class Meta:
+        model = CountryHdi
