@@ -12,7 +12,8 @@ from stats.sitemap import (
     WorldPopulationGrowthRateSitemap, WorldPopulationMedianAgeSitemap,
     WorldPopulationDensitySitemap, WorldPopulationFertilitySitemap,
     CountryGdpSitemap, WorldGdpSitemap,
-    CountryCovid19Sitemap, WorldCovid19Sitemap
+    CountryCovid19Sitemap, WorldCovid19Sitemap,
+    CountryHdiSitemap, WorldHdiSitemap
 )
 
 sitemaps = {
@@ -29,8 +30,11 @@ sitemaps = {
     'world_population': WorldPopulationSitemap,
     'country_population': CountryPopulationSitemap,
 
-    'country_gdp': CountryGdpSitemap,
     'world_gdp': WorldGdpSitemap,
+    'country_gdp': CountryGdpSitemap,
+
+    'world_hdi': WorldHdiSitemap,
+    'country_hdi': CountryHdiSitemap,
 
     'world_population_growth_rate': WorldPopulationGrowthRateSitemap,
     'world_population_median_age': WorldPopulationMedianAgeSitemap,

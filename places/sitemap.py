@@ -12,7 +12,9 @@ class CountrySitemap(Sitemap):
         return Country.objects.filter(is_alive=True)
 
     def lastmod(self, obj):
-        return obj.updated_at
+        if obj.updated_at:
+            return obj.updated_at
+        return obj.added_at
 
 
 class WorldSitemap(Sitemap):
@@ -24,4 +26,6 @@ class WorldSitemap(Sitemap):
         return World.objects.filter(place_type='WOR')
 
     def lastmod(self, obj):
-        return obj.updated_at
+        if obj.updated_at:
+            return obj.updated_at
+        return obj.added_at
